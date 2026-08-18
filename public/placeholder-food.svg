@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <rect width="600" height="400" fill="#1a1813"/>
+  <rect x="0" y="0" width="600" height="400" fill="url(#grad)"/>
+  <defs>
+    <radialGradient id="grad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:rgba(197,160,89,0.12)"/>
+      <stop offset="100%" style="stop-color:rgba(26,24,19,0)"/>
+    </radialGradient>
+  </defs>
+  <g transform="translate(300,180)" stroke="#C9922A" fill="none" stroke-width="1.2" opacity="0.7">
+    <path d="M-60,30 L-60,-10 L-40,-30 L40,-30 L60,-10 L60,30 Z"/>
+    <path d="M-40,-30 L-40,-50 L40,-50 L40,-30"/>
+    <path d="M-20,-50 L-20,-65 L20,-65 L20,-50"/>
+    <line x1="-60" y1="30" x2="60" y2="30"/>
+    <path d="M-50,30 Q-50,45 -35,45 L35,45 Q50,45 50,30"/>
+  </g>
+  <text x="300" y="260" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="700" letter-spacing="0.2em" fill="#C9922A" opacity="0.4">AURUM &amp; EMBER</text>
+</svg>
