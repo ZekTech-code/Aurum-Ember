@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    },
+    {
       "source": "/api/:path*",
       "destination": "https://restaurant-backend-xxxx.onrender.com/api/:path*"
     }
