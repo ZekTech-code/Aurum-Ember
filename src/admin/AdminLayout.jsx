@@ -81,8 +81,8 @@ const AdminLayout = () => {
   };
 
   const [adminProfile, setAdminProfile] = useState({
-    name: 'Inibehe John',
-    role: 'Master Administrator',
+    name: '',
+    role: 'Administrator',
     image: null
   });
 
@@ -95,6 +95,28 @@ const AdminLayout = () => {
     }
     localStorage.setItem('admin-theme', isDarkMode ? 'dark' : 'light');
   }, [isDarkMode]);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = sessionStorage.getItem('ae-admin-token');
+        const res = await fetch('/api/admin/profile', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setAdminProfile({
+            name: data.name || '',
+            role: data.role || 'Administrator',
+            image: data.image || null
+          });
+        }
+      } catch (e) {
+        console.error('Failed to fetch profile:', e);
+      }
+    };
+    fetchProfile();
+  }, []);
 
   const handleLogout = () => {
     if (adminLogout) {

@@ -83,8 +83,8 @@ const AdminDashboard = () => {
     return true;
   });
   const [adminProfile, setAdminProfile] = useState({
-    name: 'Inibehe John',
-    role: 'Master Administrator',
+    name: '',
+    role: 'Administrator',
     image: null
   });
   const [viewedTabs, setViewedTabs] = useState([]);
@@ -160,6 +160,28 @@ const AdminDashboard = () => {
       }
     };
     fetchNotifications();
+  }, []);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = sessionStorage.getItem('ae-admin-token');
+        const res = await fetch('/api/admin/profile', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setAdminProfile({
+            name: data.name || '',
+            role: data.role || 'Administrator',
+            image: data.image || null
+          });
+        }
+      } catch (e) {
+        console.error('Failed to fetch profile:', e);
+      }
+    };
+    fetchProfile();
   }, []);
 
   const handleImageChange = (e) => {
@@ -453,10 +475,16 @@ const AdminDashboard = () => {
                   <button 
                     onClick={() => {
                       setShowResetConfirm(false);
-                      sessionStorage.removeItem('admin-active-tab');
-                      setTimeout(() => {
+                      const token = sessionStorage.getItem('ae-admin-token');
+                      fetch('/api/admin/reset-data', {
+                        method: 'POST',
+                        headers: { Authorization: `Bearer ${token}` }
+                      }).then(() => {
+                        sessionStorage.removeItem('admin-active-tab');
                         window.location.reload();
-                      }, 500);
+                      }).catch(() => {
+                        window.location.reload();
+                      });
                     }}
                     className="flex-1 py-3 bg-rose-500 text-white font-black text-sm uppercase tracking-widest rounded-2xl hover:bg-rose-600 shadow-lg shadow-rose-500/20 active:scale-95 transition-all"
                   >

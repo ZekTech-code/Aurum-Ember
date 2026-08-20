@@ -27,8 +27,8 @@ const SettingsPage = ({
 
   const [adminProfile, setAdminProfile] = useState(
     initialProfile || {
-      name: 'Inibehe John',
-      role: 'Master Administrator',
+      name: '',
+      role: 'Administrator',
       image: null,
     }
   );

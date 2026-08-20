@@ -124,4 +124,16 @@ router.put('/notifications/:id', authenticateToken, requireAdmin, async (req, re
   res.json(updated);
 });
 
+router.post('/reset-data', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    await db.set('orders', []);
+    await db.set('admin_notifications', []);
+    await db.set('reservations', []);
+    res.json({ message: 'All data has been cleared' });
+  } catch (e) {
+    console.error('Reset data error:', e);
+    res.status(500).json({ message: 'Failed to reset data' });
+  }
+});
+
 export default router;
