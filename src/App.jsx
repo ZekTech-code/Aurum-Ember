@@ -63,6 +63,7 @@ export default function App() {
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [showSplash, setShowSplash] = useState(true);
   const observerRef = useRef(null);
+  const offlineTimerRef = useRef(null);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDark);
@@ -70,11 +71,20 @@ export default function App() {
   }, [isDark]);
 
   useEffect(() => {
-    const handleOffline = () => setIsOffline(true);
-    const handleOnline = () => setIsOffline(false);
+    const handleOffline = () => {
+      offlineTimerRef.current = setTimeout(() => {
+        if (!navigator.onLine) setIsOffline(true);
+      }, 3000);
+    };
+    const handleOnline = () => {
+      clearTimeout(offlineTimerRef.current);
+      offlineTimerRef.current = null;
+      setIsOffline(false);
+    };
     window.addEventListener('offline', handleOffline);
     window.addEventListener('online', handleOnline);
     return () => {
+      clearTimeout(offlineTimerRef.current);
       window.removeEventListener('offline', handleOffline);
       window.removeEventListener('online', handleOnline);
     };
