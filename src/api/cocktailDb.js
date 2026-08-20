@@ -40,8 +40,13 @@ export async function searchDrinks(query) {
 
 export async function getDrinkById(id) {
   if (!id) return null;
-  const data = await fetchJSON(`${BASE}/lookup.php?i=${encodeURIComponent(id)}`);
-  return data.drinks && data.drinks.length > 0 ? normalizeDrink(data.drinks[0]) : null;
+  try {
+    const res = await fetch(`/api/meals/drink/${encodeURIComponent(id)}`);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
 }
 
 export async function getRandomDrink() {

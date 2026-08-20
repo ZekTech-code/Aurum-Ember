@@ -83,6 +83,54 @@ router.get('/external-menu', async (req, res) => {
   res.json({ items });
 });
 
+const drinkCache = new Map();
+const DRINK_CACHE_TTL = 5 * 60 * 1000;
+
+router.get('/drink/:id', async (req, res) => {
+  const { id } = req.params;
+  if (!id) return res.status(400).json({ error: 'Drink ID required' });
+
+  const cached = drinkCache.get(id);
+  if (cached && Date.now() - cached.ts < DRINK_CACHE_TTL) {
+    return res.json(cached.data);
+  }
+
+  try {
+    const data = await fetchJSON(`${COCKTAILDB_BASE}/lookup.php?i=${encodeURIComponent(id)}`);
+    const drinks = Array.isArray(data.drinks) ? data.drinks : [];
+    if (drinks.length === 0) return res.status(404).json({ error: 'Drink not found' });
+
+    const drink = drinks[0];
+    const ingredients = [];
+    for (let i = 1; i <= 15; i++) {
+      const ing = drink[`strIngredient${i}`];
+      const measure = drink[`strMeasure${i}`];
+      if (ing && ing.trim()) {
+        ingredients.push(measure ? `${measure.trim()} ${ing.trim()}` : ing.trim());
+      }
+    }
+
+    const normalized = {
+      id: drink.idDrink,
+      name: drink.strDrink,
+      image: drink.strDrinkThumb,
+      category: drink.strCategory || 'Cocktail',
+      glass: drink.strGlass || 'Glass',
+      alcoholic: drink.strAlcoholic === 'Alcoholic' ? 'Alcoholic' : 'Non Alcoholic',
+      instructions: drink.strInstructions || '',
+      tags: drink.strTags ? drink.strTags.split(',').map(t => t.trim()) : [],
+      video: drink.strVideo || '',
+      source: drink.strSource || '',
+      ingredients,
+    };
+
+    drinkCache.set(id, { data: normalized, ts: Date.now() });
+    res.json(normalized);
+  } catch {
+    res.status(502).json({ error: 'Failed to fetch drink' });
+  }
+});
+
 router.get('/', async (req, res) => {
   const { page = 1, limit = 200, category, search, sort } = req.query;
   let meals = await db.get('meals');
