@@ -124,7 +124,7 @@ export default function App() {
         <SplashScreen onComplete={() => setShowSplash(false)} />
       )}
 
-      {isOffline && (
+      {isOffline && !isAdminRoute && (
         <Suspense fallback={<SplashScreen onComplete={() => {}} />}>
           <OfflinePage />
         </Suspense>
