@@ -82,19 +82,12 @@ export default function DrinkDetailPage() {
   return (
     <PageLayout>
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 20px 60px' }}>
-        <style>{`
-          @media (max-width: 640px) {
-            .drink-detail-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
-            .drink-detail-grid section { order: 1; }
-            .drink-detail-grid aside { order: 2; padding: 16px !important; }
-          }
-        `}</style>
         <button onClick={() => navigate(-1)} style={{ marginBottom: 18, padding: '8px 14px', borderRadius: 999, border: '1px solid var(--border)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}>
           <ArrowLeft size={16} /> Back
         </button>
 
-        <div className="drink-detail-grid" style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: 28, alignItems: 'start' }}>
-          <section>
+        <div className="grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-4 md:gap-7 items-start">
+          <section className="order-1">
             <div style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid var(--border)', background: 'var(--bg-card)' }}>
               <MealImage
                 name={drink.name}
@@ -105,7 +98,7 @@ export default function DrinkDetailPage() {
             </div>
           </section>
 
-          <aside style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 18, padding: 24 }}>
+          <aside className="order-2" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 18, padding: 24 }}>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 8 }}>
               <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--brand-gold)', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 4 }}>
                 <Wine size={12} /> {drink.category}
