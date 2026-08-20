@@ -71,22 +71,34 @@ export default function App() {
   }, [isDark]);
 
   useEffect(() => {
-    const handleOffline = () => {
-      offlineTimerRef.current = setTimeout(() => {
-        if (!navigator.onLine) setIsOffline(true);
-      }, 3000);
-    };
-    const handleOnline = () => {
+    const clearOfflineTimer = () => {
       clearTimeout(offlineTimerRef.current);
       offlineTimerRef.current = null;
+    };
+    const handleOffline = () => {
+      clearOfflineTimer();
+      offlineTimerRef.current = setTimeout(() => {
+        if (!navigator.onLine) setIsOffline(true);
+      }, 5000);
+    };
+    const handleOnline = () => {
+      clearOfflineTimer();
       setIsOffline(false);
+    };
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') {
+        clearOfflineTimer();
+        if (navigator.onLine) setIsOffline(false);
+      }
     };
     window.addEventListener('offline', handleOffline);
     window.addEventListener('online', handleOnline);
+    document.addEventListener('visibilitychange', handleVisibility);
     return () => {
-      clearTimeout(offlineTimerRef.current);
+      clearOfflineTimer();
       window.removeEventListener('offline', handleOffline);
       window.removeEventListener('online', handleOnline);
+      document.removeEventListener('visibilitychange', handleVisibility);
     };
   }, []);
 
