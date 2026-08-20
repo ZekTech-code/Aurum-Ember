@@ -46,6 +46,8 @@ function MenuCard({ id, name, category, image, description }) {
   const [liked, setLiked] = useState(false);
   const cartItem = useMemo(() => cart.find((c) => c.id === id), [cart, id]);
   const price = useMemo(() => generatePrice(id), [id]);
+  const isDrink = category === 'Drinks';
+  const detailPath = isDrink ? `/drink/${id}` : `/menu/${id}`;
 
   const shortDesc = useMemo(() => {
     if (!description) return "Freshly prepared by our chefs.";
@@ -58,7 +60,7 @@ function MenuCard({ id, name, category, image, description }) {
       {/* ── Image ── */}
       <div className="mn-card-img">
         <MealImage name={name} image={image} category={category} className="mn-card-photo" />
-        <Link to={`/menu/${id}`} className="mn-img-link" aria-label={`View ${name} details`} />
+        <Link to={detailPath} className="mn-img-link" aria-label={`View ${name} details`} />
         <span className="mn-card-badge">{category}</span>
         <button
           className={`mn-fav ${liked ? "active" : ""}`}
@@ -73,7 +75,7 @@ function MenuCard({ id, name, category, image, description }) {
       <div className="mn-card-body">
         <div className="mn-card-top">
           <h3 className="mn-card-name">
-            <Link to={`/menu/${id}`}>{name}</Link>
+            <Link to={detailPath}>{name}</Link>
           </h3>
           <Stars />
         </div>
@@ -84,7 +86,7 @@ function MenuCard({ id, name, category, image, description }) {
       <div className="mn-card-foot">
         <span className="mn-card-price">${price.toLocaleString('en-US')}</span>
         <div className="mn-card-btns">
-          <Link to={`/menu/${id}`} className="mn-btn mn-btn-outline">
+          <Link to={detailPath} className="mn-btn mn-btn-outline">
             <Eye size={14} />
             View Details
           </Link>
