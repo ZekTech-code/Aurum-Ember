@@ -80,6 +80,8 @@ function FloatingInput({ icon: Icon, type: initialType, name, label, value, onCh
           onChange={onChange}
           required={required}
           autoComplete={autoComplete}
+          data-lpignore="true"
+          data-form-type="other"
           placeholder={label}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
@@ -161,12 +163,18 @@ const AdminLogin = () => {
   }, []);
 
   const handleLoginChange = (e) => {
-    setLoginData({ ...loginData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === 'admin_email') setLoginData({ ...loginData, email: value });
+    else if (name === 'admin_password') setLoginData({ ...loginData, password: value });
     if (error) setError('');
   };
 
   const handleSignupChange = (e) => {
-    setSignupData({ ...signupData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === 'admin_signup_name') setSignupData({ ...signupData, name: value });
+    else if (name === 'admin_signup_email') setSignupData({ ...signupData, email: value });
+    else if (name === 'admin_signup_password') setSignupData({ ...signupData, password: value });
+    else if (name === 'admin_signup_confirm') setSignupData({ ...signupData, confirmPassword: value });
     if (error) setError('');
   };
 
@@ -354,22 +362,23 @@ const AdminLogin = () => {
                   exit={{ opacity: 0, x: 20 }}
                   transition={{ duration: 0.25 }}
                   onSubmit={handleLogin}
+                  autoComplete="off"
                   className="space-y-3"
                 >
                   <FloatingInput
                     icon={Mail}
                     type="email"
-                    name="email"
-                    label="Email Address"
+                    name="admin_email"
+                    label="Admin Email Address"
                     value={loginData.email}
                     onChange={handleLoginChange}
                     required
-                    autoComplete="email"
+                    autoComplete="off"
                   />
 
                   <FloatingInput
                     icon={Lock}
-                    name="password"
+                    name="admin_password"
                     label="Password"
                     value={loginData.password}
                     onChange={handleLoginChange}
@@ -377,7 +386,7 @@ const AdminLogin = () => {
                     isPassword
                     showPassword={showPassword}
                     onTogglePassword={() => setShowPassword(!showPassword)}
-                    autoComplete="current-password"
+                    autoComplete="new-password"
                   />
 
                   <div className="flex items-center justify-between pt-0.5">
@@ -435,33 +444,34 @@ const AdminLogin = () => {
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.25 }}
                   onSubmit={handleSignup}
+                  autoComplete="off"
                   className="space-y-2"
                 >
                   <FloatingInput
                     icon={User}
                     type="text"
-                    name="name"
+                    name="admin_signup_name"
                     label="Full Name"
                     value={signupData.name}
                     onChange={handleSignupChange}
                     required
-                    autoComplete="name"
+                    autoComplete="off"
                   />
 
                   <FloatingInput
                     icon={Mail}
                     type="email"
-                    name="email"
-                    label="Email Address"
+                    name="admin_signup_email"
+                    label="Admin Email Address"
                     value={signupData.email}
                     onChange={handleSignupChange}
                     required
-                    autoComplete="email"
+                    autoComplete="off"
                   />
 
                   <FloatingInput
                     icon={Lock}
-                    name="password"
+                    name="admin_signup_password"
                     label="Password"
                     value={signupData.password}
                     onChange={handleSignupChange}
@@ -474,7 +484,7 @@ const AdminLogin = () => {
 
                   <FloatingInput
                     icon={Lock}
-                    name="confirmPassword"
+                    name="admin_signup_confirm"
                     label="Confirm Password"
                     value={signupData.confirmPassword}
                     onChange={handleSignupChange}
@@ -548,16 +558,16 @@ const AdminLogin = () => {
               </div>
 
               {!forgotSent ? (
-                <form onSubmit={handleForgotPassword} className="space-y-4">
+                <form onSubmit={handleForgotPassword} autoComplete="off" className="space-y-4">
                   <FloatingInput
                     icon={Mail}
                     type="email"
-                    name="forgotEmail"
-                    label="Your Email Address"
+                    name="admin_forgot_email"
+                    label="Admin Email Address"
                     value={forgotEmail}
                     onChange={(e) => { setForgotEmail(e.target.value); setForgotMsg(''); }}
                     required
-                    autoComplete="email"
+                    autoComplete="off"
                   />
 
                   {forgotMsg && (
