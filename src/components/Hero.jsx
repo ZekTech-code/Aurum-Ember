@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 import { ArrowRight, Utensils } from "lucide-react";
 
 const backgrounds = [
-  "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg",
-  "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg",
-  "https://images.pexels.com/photos/262897/pexels-photo-262897.jpeg",
-  "https://images.pexels.com/photos/2092897/pexels-photo-2092897.jpeg",
-  "https://images.pexels.com/photos/1395967/pexels-photo-1395967.jpeg",
-  "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg",
+  "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?w=1200&q=80",
+  "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?w=1200&q=80",
+  "https://images.pexels.com/photos/262897/pexels-photo-262897.jpeg?w=1200&q=80",
+  "https://images.pexels.com/photos/2092897/pexels-photo-2092897.jpeg?w=1200&q=80",
+  "https://images.pexels.com/photos/1395967/pexels-photo-1395967.jpeg?w=1200&q=80",
+  "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?w=1200&q=80",
 ];
 
 export default function HomePage() {
@@ -35,14 +35,12 @@ export default function HomePage() {
             className="absolute inset-0 transition-opacity duration-1500 ease-in-out pointer-events-none"
             style={{ opacity: i === activeBg ? 1 : 0 }}
           >
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage: `url(${bg})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-              }}
+            <img
+              src={bg}
+              alt=""
+              loading={i === 0 ? "eager" : "lazy"}
+              fetchPriority={i === 0 ? "high" : "auto"}
+              className="absolute inset-0 w-full h-full object-cover"
             />
           </div>
         ))}

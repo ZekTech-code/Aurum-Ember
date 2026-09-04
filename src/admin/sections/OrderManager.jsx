@@ -704,18 +704,26 @@ const OrderManager = ({ orders, updateOrderStatus, markOrderPaid, sendNotificati
                           Mark as Paid (with audit trail)
                         </button>
                       )}
-                      <button
-                        onClick={() => {
-                          updateOrderStatus(selectedOrder._id, 'cancelled', { paymentStatus: 'failed' });
-                          sendNotification(selectedOrder.userEmail, `Your order #${selectedOrder._id} has been cancelled by the restaurant.`);
-                          setSelectedOrder({...selectedOrder, status: 'cancelled', paymentStatus: 'failed'});
-                          setToast({ message: `Order #${selectedOrder._id} cancelled`, type: 'info' });
-                        }}
-                        className="mt-4 w-full flex items-center justify-center gap-2 px-4 py-3 bg-rose-500/10 text-rose-500 rounded-2xl text-xs font-bold border border-rose-500/20 hover:bg-rose-500/20 transition-all"
-                      >
-                        <XCircle size={14} />
-                        Cancel Order
-                      </button>
+                      {selectedOrder.status !== 'delivered' && selectedOrder.status !== 'cancelled' && selectedOrder.status !== 'Cancelled by User' && (
+                        <button
+                          onClick={() => {
+                            updateOrderStatus(selectedOrder._id, 'cancelled', { paymentStatus: 'failed' });
+                            sendNotification(selectedOrder.userEmail, `Your order #${selectedOrder._id} has been cancelled by the restaurant.`);
+                            setSelectedOrder({...selectedOrder, status: 'cancelled', paymentStatus: 'failed'});
+                            setToast({ message: `Order #${selectedOrder._id} cancelled`, type: 'info' });
+                          }}
+                          className="mt-4 w-full flex items-center justify-center gap-2 px-4 py-3 bg-rose-500/10 text-rose-500 rounded-2xl text-xs font-bold border border-rose-500/20 hover:bg-rose-500/20 transition-all"
+                        >
+                          <XCircle size={14} />
+                          Cancel Order
+                        </button>
+                      )}
+                      {(selectedOrder.status === 'delivered' || selectedOrder.status === 'cancelled' || selectedOrder.status === 'Cancelled by User') && (
+                        <div className="mt-4 w-full flex items-center justify-center gap-2 px-4 py-3 bg-admin-bg text-admin-text-muted rounded-2xl text-xs font-bold border border-admin-border opacity-60 cursor-not-allowed">
+                          <XCircle size={14} />
+                          {selectedOrder.status === 'delivered' ? 'Order Delivered — Cannot Cancel' : 'Already Cancelled'}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
