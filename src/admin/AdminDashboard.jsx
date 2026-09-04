@@ -462,7 +462,7 @@ const AdminDashboard = () => {
                 </div>
                 
                 <p className="text-sm text-admin-text-muted mb-8 leading-relaxed">
-                  This will clear your admin session and refresh the dashboard. Order data and user accounts will not be affected.
+                  This will clear admin notifications and reservations. User profiles, orders, and accounts will not be affected.
                 </p>
                 
                 <div className="flex gap-3">

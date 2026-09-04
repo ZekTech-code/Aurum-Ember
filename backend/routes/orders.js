@@ -251,10 +251,4 @@ router.delete('/:orderId', authenticateToken, requireAdmin, async (req, res) => 
   res.json({ message: 'Order deleted' });
 });
 
-router.delete('/', authenticateToken, requireAdmin, async (req, res) => {
-  await db.set('orders', []);
-  await db.set('order_notifications', []);
-  res.json({ message: 'All orders cleared' });
-});
-
 export default router;
