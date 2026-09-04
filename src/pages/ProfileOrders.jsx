@@ -17,16 +17,26 @@ export default function ProfileOrders() {
   const [modalConfig, setModalConfig] = useState({ isOpen: false });
   const [cancellationToast, setCancellationToast] = useState({ show: false, count: 0 });
 
+  const cancelledStatuses = ['cancelled', 'Cancelled by User', 'unpaid', 'failed'];
+  const ongoingStatuses = ['awaiting', 'processing', 'pending', 'delivering', 'delivered'];
+
+  const getCancelReason = (status) => {
+    if (status === 'Cancelled by User' || status === 'cancelled') return 'Cancelled by you';
+    if (status === 'unpaid' || status === 'failed') return 'Payment unsuccessful';
+    return 'Cancelled';
+  };
+
+  const isCancelled = (status) => cancelledStatuses.includes(status);
+  const isOngoing = (status) => ongoingStatuses.includes(status);
+
   const orders = useMemo(() => {
     if (!user?.email) return [];
     const userEmailLower = user.email.toLowerCase();
     const userOrders = allOrders.filter((o) => o.userEmail?.toLowerCase() === userEmailLower);
     if (orderFilter === 'cancelled') {
-      return userOrders.filter((o) => o.status === 'cancelled' || o.status === 'Cancelled by User');
+      return userOrders.filter((o) => isCancelled(o.status));
     }
-    return userOrders.filter(
-      (o) => o.status === 'awaiting' || o.status === 'processing' || o.status === 'pending' || o.status === 'delivered'
-    );
+    return userOrders.filter((o) => isOngoing(o.status));
   }, [user, allOrders, orderFilter]);
 
   const handleCancelOrder = (id) => {
@@ -92,7 +102,7 @@ export default function ProfileOrders() {
                     <div className="mt-3">
                       <span
                         className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                          order.status === 'Cancelled by User' || order.status === 'cancelled'
+                          isCancelled(order.status)
                             ? 'bg-red-500/10 text-red-500'
                             : order.status === 'delivered'
                             ? 'bg-green-500/10 text-green-600'
@@ -101,8 +111,8 @@ export default function ProfileOrders() {
                             : 'bg-orange-500/10 text-orange-500'
                         }`}
                       >
-                        {order.status === 'Cancelled by User' || order.status === 'cancelled'
-                          ? 'CANCELLED'
+                        {isCancelled(order.status)
+                          ? getCancelReason(order.status)
                           : order.status === 'delivered'
                           ? 'DELIVERED'
                           : order.status === 'delivering'
@@ -117,7 +127,7 @@ export default function ProfileOrders() {
                 </div>
 
                 <div className="flex items-center justify-end gap-3 mt-5 pt-4 border-t border-(--border)">
-                  {!order.approved && order.status !== 'cancelled' && `${order.status !== 'Cancelled by User'}` && order.status !== 'delivered' && order.status !== 'delivering' && (
+                  {!order.approved && !isCancelled(order.status) && order.status !== 'delivered' && order.status !== 'delivering' && (
                     <button
                       className="px-5 py-2.5 text-xs font-bold text-white bg-red-600 hover:bg-red-700 rounded-xl transition-colors uppercase"
                       onClick={() => handleCancelOrder(order.id)}
@@ -174,9 +184,14 @@ export default function ProfileOrders() {
                     <div className="bg-(--bg-secondary) p-4 rounded-xl">
                       <p className="text-[10px] font-bold text-(--text-muted) uppercase tracking-wider mb-1">Status</p>
                       <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
-                        selectedOrder.status === 'delivered' ? 'bg-green-500/10 text-green-600' : 'bg-orange-500/10 text-orange-500'
+                        isCancelled(selectedOrder.status) ? 'bg-red-500/10 text-red-500'
+                        : selectedOrder.status === 'delivered' ? 'bg-green-500/10 text-green-600'
+                        : selectedOrder.status === 'delivering' ? 'bg-blue-500/10 text-blue-600'
+                        : 'bg-orange-500/10 text-orange-500'
                       }`}>
-                        {selectedOrder.status}
+                        {isCancelled(selectedOrder.status)
+                          ? getCancelReason(selectedOrder.status)
+                          : selectedOrder.status}
                       </span>
                     </div>
                   </div>

@@ -481,9 +481,9 @@ const AdminDashboard = () => {
                         headers: { Authorization: `Bearer ${token}` }
                       }).then(() => {
                         sessionStorage.removeItem('admin-active-tab');
-                        window.location.reload();
+                        setActiveTab('dashboard');
                       }).catch(() => {
-                        window.location.reload();
+                        setActiveTab('dashboard');
                       });
                     }}
                     className="flex-1 py-3 bg-rose-500 text-white font-black text-sm uppercase tracking-widest rounded-2xl hover:bg-rose-600 shadow-lg shadow-rose-500/20 active:scale-95 transition-all"
