@@ -168,44 +168,68 @@ const DashboardOverview = ({ orders = [] }) => {
             <svg className="w-full h-full" viewBox="0 0 1000 350" preserveAspectRatio="none">
               <defs>
                 <linearGradient id="revBarGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#EAB308" stopOpacity="0.8" />
-                  <stop offset="100%" stopColor="#EAB308" stopOpacity="0.2" />
+                  <stop offset="0%" stopColor="#EAB308" stopOpacity="0.9" />
+                  <stop offset="100%" stopColor="#EAB308" stopOpacity="0.3" />
+                </linearGradient>
+                <linearGradient id="revBarHover" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#FACC15" stopOpacity="1" />
+                  <stop offset="100%" stopColor="#EAB308" stopOpacity="0.5" />
                 </linearGradient>
               </defs>
               
               {/* Grid Lines */}
               {[0, 1, 2, 3].map(i => (
-                <line key={i} x1="0" y1={i * 100} x2="1000" y2={i * 100} stroke="var(--admin-border)" strokeWidth="1" strokeDasharray="5,5" />
+                <line key={i} x1="60" y1={300 - (i * 100)} x2="960" y2={300 - (i * 100)} stroke="var(--admin-border)" strokeWidth="1" strokeDasharray="5,5" />
               ))}
 
               {/* Revenue Bars */}
               {last7DaysRevenue.map((day, i) => {
-                const barWidth = 80;
-                const spacing = 142.8;
-                const x = (i * spacing) + (spacing - barWidth) / 2;
-                const height = day.revenue > 0 ? Math.max((day.revenue / maxRevenue) * 300, 8) : 4;
+                const barWidth = 70;
+                const spacing = 128.57;
+                const x = 60 + (i * spacing) + (spacing - barWidth) / 2;
+                const maxBarHeight = 300;
+                const height = day.revenue > 0 ? Math.max((day.revenue / maxRevenue) * maxBarHeight, 12) : 4;
                 const y = 300 - height;
                 
                 return (
                   <g key={i} className="group/bar cursor-pointer">
+                    {/* Bar shadow/glow on hover */}
+                    <rect 
+                      x={x - 2} 
+                      y={y + 4} 
+                      width={barWidth + 4} 
+                      height={height} 
+                      rx="10" 
+                      fill="transparent"
+                      className="group-hover/bar:fill-accent/10 transition-all duration-300"
+                    />
+                    {/* Main bar */}
                     <rect 
                       x={x} 
                       y={y} 
                       width={barWidth} 
                       height={height} 
-                      rx="12" 
-                      fill="url(#revBarGradient)" 
-                      className="transition-all duration-300 group-hover/bar:fill-accent group-hover/bar:filter group-hover/bar:drop-shadow-[0_0_8px_rgba(234,179,8,0.4)]"
+                      rx="10" 
+                      fill="url(#revBarGradient)"
+                      className="transition-all duration-300 group-hover/bar:opacity-80"
                     />
+                    {/* Revenue label on hover */}
                     {day.revenue > 0 && (
                       <text 
                         x={x + barWidth/2} 
                         y={y - 10} 
                         textAnchor="middle" 
-                        className="text-[14px] font-black fill-accent opacity-0 group-hover/bar:opacity-100 transition-opacity"
+                        fill="var(--admin-accent, #EAB308)"
+                        fontSize="13"
+                        fontWeight="800"
+                        className="opacity-0 group-hover/bar:opacity-100 transition-opacity duration-200"
                       >
-                        $${day.revenue.toLocaleString('en-US')}
+                        ${day.revenue.toLocaleString('en-US')}
                       </text>
+                    )}
+                    {/* Zero revenue indicator */}
+                    {day.revenue === 0 && (
+                      <circle cx={x + barWidth/2} cy={296} r="3" fill="var(--admin-text-muted, #94A3B8)" opacity="0.4" />
                     )}
                   </g>
                 );
@@ -213,12 +237,19 @@ const DashboardOverview = ({ orders = [] }) => {
 
               {/* Day Labels */}
               {last7DaysRevenue.map((day, i) => {
-                const spacing = 142.8;
-                const x = (i * spacing) + spacing / 2;
+                const spacing = 128.57;
+                const x = 60 + (i * spacing) + spacing / 2;
                 return (
-                  <text key={i} x={x} y={340} textAnchor="middle" className="text-[14px] font-black fill-admin-text-muted uppercase tracking-widest">{day.label}</text>
+                  <text key={i} x={x} y={330} textAnchor="middle" fill="var(--admin-text-muted, #94A3B8)" fontSize="12" fontWeight="800" letterSpacing="0.1em">{day.label}</text>
                 );
               })}
+
+              {/* Y-axis labels */}
+              {[0, 1, 2, 3].map(i => (
+                <text key={i} x="50" y={303 - (i * 100)} textAnchor="end" fill="var(--admin-text-muted, #94A3B8)" fontSize="10" fontWeight="700">
+                  ${i === 0 ? '0' : (maxRevenue / 3 * i).toFixed(0)}
+                </text>
+              ))}
             </svg>
           </div>
         </div>
@@ -466,7 +497,8 @@ const DashboardOverview = ({ orders = [] }) => {
                       )
                       .sort((a, b) => b.sold - a.sold)
                       .map(item => (
-                        <tr key={item.id || item.name} className="hover:bg-admin-bg/30 transition-colors">
+                        <tr key={item.id || item.name} 
+className="hover:bg-admin-bg transition-colors">
                           <td className="py-4">
                             <div className="flex items-center gap-3">
                               <MealImage 
