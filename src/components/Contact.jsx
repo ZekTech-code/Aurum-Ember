@@ -1,26 +1,6 @@
-import  { useEffect, useRef, useState } from "react";
 import "../styles/Contact.css";
 
 const Contact = () => {
-  const [loadMap, setLoadMap] = useState(false);
-  const mapRef = useRef();
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setLoadMap(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.01 }
-    );
-
-    if (mapRef.current) observer.observe(mapRef.current);
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <section id="contact" className="contact-section">
       <div className="container">
@@ -49,18 +29,11 @@ const Contact = () => {
           </div>
 
           {/* Map */}
-          <div className="contact-map" ref={mapRef}>
-            {loadMap ? (
-              <iframe
-                title="map"
-                src="https://www.google.com/maps?q=Abuja,Nigeria&output=embed"
-                loading="lazy"
-              />
-            ) : (
-              <div className="map-placeholder">
-                Loading map...
-              </div>
-            )}
+          <div className="contact-map">
+            <iframe
+              title="map"
+              src="https://www.google.com/maps?q=Abuja,Nigeria&output=embed"
+            />
           </div>
         </div>
       </div>
