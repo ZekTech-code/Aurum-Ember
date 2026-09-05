@@ -126,9 +126,14 @@ router.put('/notifications/:id', authenticateToken, requireAdmin, async (req, re
 
 router.post('/reset-data', authenticateToken, requireAdmin, async (req, res) => {
   try {
-    await db.set('admin_notifications', []);
+    await db.set('orders', []);
+    await db.set('payments', []);
     await db.set('reservations', []);
-    res.json({ message: 'Admin data has been cleared' });
+    await db.set('order_notifications', []);
+    await db.set('admin_notifications', []);
+    await db.set('chats', []);
+    await db.set('riders', []);
+    res.json({ message: 'All site data has been cleared. User accounts and menu remain intact.' });
   } catch (e) {
     console.error('Reset data error:', e);
     res.status(500).json({ message: 'Failed to reset data' });

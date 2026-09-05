@@ -164,18 +164,6 @@ function OrderProvider({ children }) {
 
   const getAllOrders = () => orders;
 
-  const clearAllOrders = async () => {
-    try {
-      await fetch(`${API_BASE}/orders`, {
-        method: 'DELETE',
-        headers: headers()
-      });
-      setOrders([]);
-    } catch {
-      // Silent fail
-    }
-  };
-
   return (
     <OrderContext.Provider value={{
       orders,
@@ -187,7 +175,6 @@ function OrderProvider({ children }) {
       deleteOrder,
       getUserOrders,
       getAllOrders,
-      clearAllOrders,
       fetchOrders,
       paymentFailedPopup,
       dismissPaymentFailedPopup: () => setPaymentFailedPopup(null)

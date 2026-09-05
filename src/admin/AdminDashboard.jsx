@@ -37,7 +37,7 @@ import '../styles/admin.css';
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { orders, updateOrderStatus, markOrderPaid } = useOrders();
+  const { orders, updateOrderStatus, markOrderPaid, fetchOrders } = useOrders();
   const { isAdminAuthenticated, sendNotification } = useAuth();
   const { getAllChats } = useChat();
   const fileInputRef = useRef(null);
@@ -462,7 +462,7 @@ const AdminDashboard = () => {
                 </div>
                 
                 <p className="text-sm text-admin-text-muted mb-8 leading-relaxed">
-                  This will clear admin notifications and reservations. User profiles, orders, and accounts will not be affected.
+                  This will permanently clear all site data — orders, payments, reservations, notifications, chats, and riders. User accounts, menu data, and admin accounts will not be affected.
                 </p>
                 
                 <div className="flex gap-3">
@@ -481,6 +481,9 @@ const AdminDashboard = () => {
                         headers: { Authorization: `Bearer ${token}` }
                       }).then(() => {
                         sessionStorage.removeItem('admin-active-tab');
+                        setNotifications([]);
+                        setViewedTabs([]);
+                        fetchOrders();
                         setActiveTab('dashboard');
                       }).catch(() => {
                         setActiveTab('dashboard');
