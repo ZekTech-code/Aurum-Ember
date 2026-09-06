@@ -27,6 +27,10 @@ export default function MenuItemPage() {
   const [isZoomed, setIsZoomed] = useState(false);
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [mealId]);
+
+  useEffect(() => {
     let cancelled = false;
     setLoading(true);
     setError(null);
@@ -102,7 +106,7 @@ export default function MenuItemPage() {
             </div>
           </section>
 
-          <aside style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 18, padding: 24, height: 420, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+          <aside className="no-scrollbar" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 18, padding: 24, height: 420, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 8 }}>
               <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--brand-gold)', textTransform: 'uppercase' }}>
                 {meal.category}

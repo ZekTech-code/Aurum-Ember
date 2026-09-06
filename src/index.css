@@ -1968,6 +1968,17 @@ body {
   scrollbar-color: var(--brand-gold) transparent;
 }
 
+/* Invisible scrollbar – scrollable but no visible bar */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 /* Cart scrollable area – WebKit */
 .cart-scroll::-webkit-scrollbar {
   width: 5px;
