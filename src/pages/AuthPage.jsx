@@ -518,12 +518,16 @@ const AuthPage = () => {
                           <h3 className="text-sm font-bold text-white tracking-wide">Reset Password</h3>
                         </div>
                         <p className="text-[11px] text-neutral-500 leading-relaxed mb-4">Enter the email address associated with your account and we'll send a password reset link.</p>
-                        <form onSubmit={handleForgotSubmit} className="space-y-4">
+                        <form onSubmit={handleForgotSubmit} autoComplete="off" className="space-y-4">
                           <div className="space-y-1">
                             <div className="relative">
                               <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-600" size={13} />
                               <input
                                 type="email"
+                                name="user_forgot_email"
+                                autoComplete="off"
+                                data-lpignore="true"
+                                data-form-type="other"
                                 placeholder="Email address"
                                 value={forgotEmail}
                                 onChange={(e) => { setForgotEmail(e.target.value); setForgotError(''); }}
@@ -618,6 +622,9 @@ const AuthPage = () => {
                       <div className="space-y-1">
                         <input 
                           type="text" 
+                          name="user_fullname"
+                          autoComplete="off"
+                          data-lpignore="true"
                           placeholder="Full Name"
                           className={`w-full bg-white/5 border-2 ${errors.fullName ? 'border-red-500/60 bg-red-950/20' : 'border-white/5'} focus:border-[#c5a059]/50 outline-none rounded-xl py-3 px-4 text-xs transition-all duration-300 placeholder:text-neutral-600 focus:bg-white/[0.07] ${shakeField === 'fullName' ? 'animate-[shake_0.4s_ease-in-out]' : ''}`}
                           style={shakeField === 'fullName' ? { animation: 'shake 0.4s ease-in-out' } : {}}
@@ -640,6 +647,9 @@ const AuthPage = () => {
                       <div className="space-y-1">
                         <input 
                           type="tel" 
+                          name="user_phone"
+                          autoComplete="off"
+                          data-lpignore="true"
                           placeholder="Phone Number"
                           className={`w-full bg-white/5 border-2 ${errors.phone ? 'border-red-500/60 bg-red-950/20' : 'border-white/5'} focus:border-[#c5a059]/50 outline-none rounded-xl py-3 px-4 text-xs transition-all duration-300 placeholder:text-neutral-600 focus:bg-white/[0.07] ${shakeField === 'phone' ? 'animate-[shake_0.4s_ease-in-out]' : ''}`}
                           style={shakeField === 'phone' ? { animation: 'shake 0.4s ease-in-out' } : {}}
@@ -665,6 +675,9 @@ const AuthPage = () => {
                       <div className="space-y-1">
                         <input 
                           type="text" 
+                          name="user_location"
+                          autoComplete="off"
+                          data-lpignore="true"
                           placeholder="Location/City"
                           className={`w-full bg-white/5 border-2 ${errors.location ? 'border-red-500/60 bg-red-950/20' : 'border-white/5'} focus:border-[#c5a059]/50 outline-none rounded-xl py-3 px-4 text-xs transition-all duration-300 placeholder:text-neutral-600 focus:bg-white/[0.07] ${shakeField === 'location' ? 'animate-[shake_0.4s_ease-in-out]' : ''}`}
                           style={shakeField === 'location' ? { animation: 'shake 0.4s ease-in-out' } : {}}
@@ -687,6 +700,9 @@ const AuthPage = () => {
                       <div className="space-y-1">
                         <input 
                           type="text" 
+                          name="user_state"
+                          autoComplete="off"
+                          data-lpignore="true"
                           placeholder="State"
                           className={`w-full bg-white/5 border-2 ${errors.state ? 'border-red-500/60 bg-red-950/20' : 'border-white/5'} focus:border-[#c5a059]/50 outline-none rounded-xl py-3 px-4 text-xs transition-all duration-300 placeholder:text-neutral-600 focus:bg-white/[0.07] ${shakeField === 'state' ? 'animate-[shake_0.4s_ease-in-out]' : ''}`}
                           style={shakeField === 'state' ? { animation: 'shake 0.4s ease-in-out' } : {}}
@@ -710,11 +726,15 @@ const AuthPage = () => {
                   </div>
                 )}
 
-              <form onSubmit={handleAuth} className={`space-y-5${!isLogin ? ' mt-6' : ''}`}>
+              <form onSubmit={handleAuth} autoComplete="off" className={`space-y-5${!isLogin ? ' mt-6' : ''}`}>
                 <div className="space-y-3">
                   <div className="space-y-1">
                     <input 
                       type="email" 
+                      name="user_email"
+                      autoComplete="off"
+                      data-lpignore="true"
+                      data-form-type="other"
                       placeholder="Email Address"
                       className={`w-full bg-white/5 border-2 ${errors.email ? 'border-red-500/60 bg-red-950/20' : 'border-white/5'} focus:border-[#c5a059]/50 outline-none rounded-xl py-3 px-4 text-xs transition-all duration-300 placeholder:text-neutral-600 focus:bg-white/[0.07] ${shakeField === 'email' ? 'animate-[shake_0.4s_ease-in-out]' : ''}`}
                       style={shakeField === 'email' ? { animation: 'shake 0.4s ease-in-out' } : {}}
@@ -739,6 +759,10 @@ const AuthPage = () => {
                     <div className="relative">
                       <input 
                         type={showPassword ? 'text' : 'password'} 
+                        name="user_password"
+                        autoComplete="new-password"
+                        data-lpignore="true"
+                        data-form-type="other"
                         placeholder="Password"
                         className={`w-full bg-white/5 border-2 ${errors.password ? 'border-red-500/60 bg-red-950/20' : 'border-white/5'} focus:border-[#c5a059]/50 outline-none rounded-xl py-3 px-4 text-xs transition-all duration-300 placeholder:text-neutral-600 focus:bg-white/[0.07] ${shakeField === 'password' ? 'animate-[shake_0.4s_ease-in-out]' : ''}`}
                         style={shakeField === 'password' ? { animation: 'shake 0.4s ease-in-out' } : {}}

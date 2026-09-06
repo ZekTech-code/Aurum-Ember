@@ -25,15 +25,6 @@ export default function MenuItemPage() {
   const [meal, setMeal] = useState(null);
   const [error, setError] = useState(null);
   const [isZoomed, setIsZoomed] = useState(false);
-  const [lensPos, setLensPos] = useState({ x: 50, y: 50 });
-  const [showLens, setShowLens] = useState(false);
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setLensPos({ x, y });
-  };
 
   useEffect(() => {
     let cancelled = false;
@@ -96,13 +87,10 @@ export default function MenuItemPage() {
           <ArrowLeft size={16} /> Back
         </button>
 
-        <div className="grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-4 md:gap-7 items-start">
-          <section className="order-1">
+        <div className="grid grid-cols-1 gap-4 md:gap-7">
+          <section>
             <div
-              style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid var(--border)', background: 'var(--bg-card)', position: 'relative', cursor: 'crosshair' }}
-              onMouseEnter={() => setShowLens(true)}
-              onMouseLeave={() => setShowLens(false)}
-              onMouseMove={handleMouseMove}
+              style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid var(--border)', background: 'var(--bg-card)', position: 'relative', cursor: 'zoom-in' }}
               onClick={() => setIsZoomed(true)}
             >
               <MealImage
@@ -111,56 +99,10 @@ export default function MenuItemPage() {
                 category={meal.category}
                 style={{ width: '100%', height: 420, objectFit: 'cover', display: 'block', pointerEvents: 'none' }}
               />
-              {showLens && (
-                <div style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  pointerEvents: 'none',
-                  zIndex: 10,
-                  overflow: 'hidden',
-                  borderRadius: 16,
-                }}>
-                  <div style={{
-                    position: 'absolute',
-                    width: 140,
-                    height: 140,
-                    borderRadius: '50%',
-                    border: '2px solid rgba(201,146,42,0.8)',
-                    boxShadow: '0 0 0 1px rgba(0,0,0,0.2), 0 4px 20px rgba(0,0,0,0.3)',
-                    left: `calc(${lensPos.x}% - 70px)`,
-                    top: `calc(${lensPos.y}% - 70px)`,
-                    backgroundImage: `url(${meal.image})`,
-                    backgroundSize: `${420 * (420 / 140)}px auto`,
-                    backgroundPosition: `${(lensPos.x / 100) * 420 * (420 / 140) - 70}px ${(lensPos.y / 100) * 420 * (420 / 140) - 70}px`,
-                    zIndex: 11,
-                    transition: 'left 0.05s ease-out, top 0.05s ease-out',
-                  }} />
-                  <div style={{
-                    position: 'absolute',
-                    top: 12,
-                    right: 12,
-                    background: 'rgba(0,0,0,0.6)',
-                    color: '#fff',
-                    padding: '4px 10px',
-                    borderRadius: 6,
-                    fontSize: 11,
-                    fontWeight: 600,
-                    pointerEvents: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 4,
-                  }}>
-                    <span style={{ fontSize: 14, lineHeight: 1 }}>+</span> Hover to zoom · Click for full view
-                  </div>
-                </div>
-              )}
             </div>
           </section>
 
-          <aside className="order-2" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 18, padding: 24 }}>
+          <aside style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 18, padding: 24 }}>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 8 }}>
               <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--brand-gold)', textTransform: 'uppercase' }}>
                 {meal.category}

@@ -104,12 +104,16 @@ export default function ResetPassword({ apiPrefix = '/api/users' }) {
           </div>
 
           {!success ? (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} autoComplete="off" className="space-y-4">
               {/* Password */}
               <div className="relative group">
                 <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/25 group-focus-within:text-(--brand-gold) transition-colors z-10" size={15} />
                 <input
                   type={showPassword ? 'text' : 'password'}
+                  name="reset_password"
+                  autoComplete="new-password"
+                  data-lpignore="true"
+                  data-form-type="other"
                   value={password}
                   onChange={(e) => { setPassword(e.target.value); setError(''); }}
                   placeholder="New Password"
@@ -126,6 +130,10 @@ export default function ResetPassword({ apiPrefix = '/api/users' }) {
                 <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/25 group-focus-within:text-(--brand-gold) transition-colors z-10" size={15} />
                 <input
                   type={showConfirm ? 'text' : 'password'}
+                  name="reset_confirm_password"
+                  autoComplete="new-password"
+                  data-lpignore="true"
+                  data-form-type="other"
                   value={confirmPassword}
                   onChange={(e) => { setConfirmPassword(e.target.value); setError(''); }}
                   placeholder="Confirm Password"
