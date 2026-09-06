@@ -151,30 +151,26 @@ export default function MenuItemPage() {
 
             <div style={{ display: 'flex', gap: 10, flexDirection: 'column' }}>
               {inCart ? (
-                <div style={{ display: 'flex', justifyContent: 'center', gap: 14, alignItems: 'center' }}>
-                  <button onClick={() => updateQuantity?.(mealId, inCart.quantity - 1)} style={{ padding: '6px 12px', border: '1px solid var(--border)', background: 'transparent', cursor: 'pointer' }}>-</button>
-                  <span>{inCart.quantity}</span>
-                  <button onClick={() => updateQuantity?.(mealId, inCart.quantity + 1)} style={{ padding: '6px 12px', border: '1px solid var(--border)', background: 'transparent', cursor: 'pointer' }}>+</button>
-                </div>
+                <>
+                  <div style={{ display: 'flex', justifyContent: 'center', gap: 14, alignItems: 'center' }}>
+                    <button onClick={() => updateQuantity?.(mealId, inCart.quantity - 1)} style={{ padding: '6px 12px', border: '1px solid var(--border)', background: 'transparent', cursor: 'pointer' }}>-</button>
+                    <span>{inCart.quantity}</span>
+                    <button onClick={() => updateQuantity?.(mealId, inCart.quantity + 1)} style={{ padding: '6px 12px', border: '1px solid var(--border)', background: 'transparent', cursor: 'pointer' }}>+</button>
+                  </div>
+                  <Link to="/cart" style={{ display: 'flex', gap: 8, justifyContent: 'center', padding: '12px', borderRadius: 10, textDecoration: 'none', background: 'var(--brand-gold)', color: '#fff', fontWeight: 700 }}>
+                    <ShoppingBag size={16} />
+                    View Cart
+                  </Link>
+                </>
               ) : (
                 <button
                   onClick={() => addToCart?.({ id: mealId, name: meal.name, image: meal.image, price })}
-                  style={{ display: 'flex', gap: 8, justifyContent: 'center', padding: '12px', borderRadius: 10, border: '1px solid var(--brand-gold)', background: 'transparent', color: 'var(--brand-gold)', cursor: 'pointer' }}
+                  style={{ display: 'flex', gap: 8, justifyContent: 'center', padding: '12px', borderRadius: 10, border: '1px solid var(--brand-gold)', background: 'var(--brand-gold)', color: '#fff', cursor: 'pointer', fontWeight: 700 }}
                 >
                   <ShoppingCart size={16} />
                   Add to Cart
                 </button>
               )}
-              <button
-                onClick={() => {
-                  if (!inCart) addToCart?.({ id: mealId, name: meal.name, image: meal.image, price });
-                  navigate("/checkout");
-                }}
-                style={{ display: 'flex', gap: 8, justifyContent: 'center', padding: '12px', borderRadius: 10, border: 'none', background: 'var(--brand-gold)', color: '#fff', cursor: 'pointer' }}
-              >
-                <ShoppingBag size={16} />
-                Order Now
-              </button>
             </div>
 
             {meal.youtube && (
