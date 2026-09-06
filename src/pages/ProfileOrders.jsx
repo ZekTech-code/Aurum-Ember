@@ -20,9 +20,8 @@ export default function ProfileOrders() {
   const cancelledStatuses = ['cancelled', 'Cancelled by User', 'unpaid', 'failed'];
   const ongoingStatuses = ['awaiting', 'processing', 'pending', 'delivering', 'delivered'];
 
-  const getCancelReason = (status) => {
-    if (status === 'Cancelled by User' || status === 'cancelled') return 'Cancelled by you';
-    if (status === 'unpaid' || status === 'failed') return 'Payment unsuccessful';
+  const getCancelReason = (order) => {
+    if (order.paymentStatus === 'failed' || order.paymentStatus === 'unpaid') return 'Cancelled / Payment unsuccessful';
     return 'Cancelled';
   };
 
@@ -112,7 +111,7 @@ export default function ProfileOrders() {
                         }`}
                       >
                         {isCancelled(order.status)
-                          ? getCancelReason(order.status)
+                          ? getCancelReason(order)
                           : order.status === 'delivered'
                           ? 'DELIVERED'
                           : order.status === 'delivering'
@@ -127,7 +126,7 @@ export default function ProfileOrders() {
                 </div>
 
                 <div className="flex items-center justify-end gap-3 mt-5 pt-4 border-t border-(--border)">
-                  {!order.approved && !isCancelled(order.status) && order.status !== 'delivered' && order.status !== 'delivering' && (
+                  {!order.approved && !isCancelled(order.status) && order.status !== 'delivered' && order.status !== 'delivering' && order.paymentStatus !== 'paid' && (
                     <button
                       className="px-5 py-2.5 text-xs font-bold text-white bg-red-600 hover:bg-red-700 rounded-xl transition-colors uppercase"
                       onClick={() => handleCancelOrder(order.id)}
@@ -190,7 +189,7 @@ export default function ProfileOrders() {
                         : 'bg-orange-500/10 text-orange-500'
                       }`}>
                         {isCancelled(selectedOrder.status)
-                          ? getCancelReason(selectedOrder.status)
+                          ? getCancelReason(selectedOrder)
                           : selectedOrder.status}
                       </span>
                     </div>

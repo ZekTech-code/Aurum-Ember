@@ -225,6 +225,10 @@ router.put('/:orderId/cancel', authenticateToken, async (req, res) => {
     return res.status(403).json({ error: 'Not authorized to cancel this order' });
   }
 
+  if (existing.paymentStatus === 'paid') {
+    return res.status(400).json({ error: 'This order has already been paid and cannot be cancelled' });
+  }
+
   const order = await db.updateById('orders', req.params.orderId, {
     status: 'cancelled',
     cancelledAt: new Date().toISOString(),

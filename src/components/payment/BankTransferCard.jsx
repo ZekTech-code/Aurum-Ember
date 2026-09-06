@@ -54,7 +54,7 @@ export default function BankTransferCard({ details, amount }) {
         <p className="text-xs text-[var(--text-muted)]">Transfer the exact amount to the account below</p>
       </div>
 
-      <div className="bg-[var(--bg-card)] rounded-[24px] border border-[var(--border)] shadow-xl overflow-hidden">
+      <div className="bg-[var(--bg-card)] rounded-[24px] border border-[var(--border)] shadow-[0_16px_40px_-8px_rgba(0,0,0,0.3)] overflow-hidden">
         <div className="bg-gradient-to-r from-[var(--brand-gold)]/10 to-[var(--brand-gold)]/5 px-6 py-4 border-b border-[var(--border)]">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">

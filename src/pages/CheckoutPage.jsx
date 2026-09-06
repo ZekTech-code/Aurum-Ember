@@ -66,11 +66,13 @@ export default function CheckoutPage() {
 
     if (bankTransferDetails && !transitioning) {
       return (
-        <BankTransferCard
-          key="bank-waiting"
-          details={bankTransferDetails}
-          amount={totalAmount}
-        />
+        <div className="bg-(--bg-card) rounded-3xl border border-(--border) shadow-[0_24px_60px_-12px_rgba(0,0,0,0.35)] p-2 sm:p-4">
+          <BankTransferCard
+            key="bank-waiting"
+            details={bankTransferDetails}
+            amount={totalAmount}
+          />
+        </div>
       );
     }
 

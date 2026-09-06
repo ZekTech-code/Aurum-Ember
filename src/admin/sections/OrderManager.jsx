@@ -704,7 +704,7 @@ const OrderManager = ({ orders, updateOrderStatus, markOrderPaid, sendNotificati
                           Mark as Paid (with audit trail)
                         </button>
                       )}
-                      {selectedOrder.status !== 'delivered' && selectedOrder.status !== 'cancelled' && selectedOrder.status !== 'Cancelled by User' && (
+                      {selectedOrder.status !== 'delivered' && selectedOrder.status !== 'cancelled' && selectedOrder.status !== 'Cancelled by User' && selectedOrder.paymentStatus !== 'paid' && (
                         <button
                           onClick={() => {
                             updateOrderStatus(selectedOrder._id, 'cancelled', { paymentStatus: 'failed' });
@@ -718,10 +718,10 @@ const OrderManager = ({ orders, updateOrderStatus, markOrderPaid, sendNotificati
                           Cancel Order
                         </button>
                       )}
-                      {(selectedOrder.status === 'delivered' || selectedOrder.status === 'cancelled' || selectedOrder.status === 'Cancelled by User') && (
+                      {(selectedOrder.status === 'delivered' || selectedOrder.status === 'cancelled' || selectedOrder.status === 'Cancelled by User' || (selectedOrder.paymentStatus === 'paid' && selectedOrder.status !== 'cancelled')) && (
                         <div className="mt-4 w-full flex items-center justify-center gap-2 px-4 py-3 bg-admin-bg text-admin-text-muted rounded-2xl text-xs font-bold border border-admin-border opacity-60 cursor-not-allowed">
                           <XCircle size={14} />
-                          {selectedOrder.status === 'delivered' ? 'Order Delivered — Cannot Cancel' : 'Already Cancelled'}
+                          {selectedOrder.paymentStatus === 'paid' ? 'Payment Confirmed — Cannot Cancel' : selectedOrder.status === 'delivered' ? 'Order Delivered — Cannot Cancel' : 'Already Cancelled'}
                         </div>
                       )}
                     </div>
