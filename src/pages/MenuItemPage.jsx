@@ -82,15 +82,15 @@ export default function MenuItemPage() {
 
   return (
     <PageLayout>
-<div style={{ maxWidth: 600, margin: '0 auto', padding: '0 20px 60px' }}>
+<div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 20px 60px' }}>
         <button onClick={() => navigate(-1)} style={{ marginBottom: 18, padding: '8px 14px', borderRadius: 999, border: '1px solid var(--border)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}>
           <ArrowLeft size={16} /> Back
         </button>
 
-        <div className="grid grid-cols-1 gap-4 md:gap-7">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-7 items-stretch">
           <section>
             <div
-              style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid var(--border)', background: 'var(--bg-card)', position: 'relative', cursor: 'zoom-in' }}
+              style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid var(--border)', background: 'var(--bg-card)', position: 'relative', cursor: 'zoom-in', height: 420 }}
               onClick={() => setIsZoomed(true)}
             >
               <MealImage
@@ -102,7 +102,7 @@ export default function MenuItemPage() {
             </div>
           </section>
 
-          <aside style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 18, padding: 24 }}>
+          <aside style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 18, padding: 24, height: 420, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 8 }}>
               <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--brand-gold)', textTransform: 'uppercase' }}>
                 {meal.category}
