@@ -82,7 +82,7 @@ export default function MenuItemPage() {
 
   return (
     <PageLayout>
-      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 20px 60px' }}>
+<div style={{ maxWidth: 600, margin: '0 auto', padding: '0 20px 60px' }}>
         <button onClick={() => navigate(-1)} style={{ marginBottom: 18, padding: '8px 14px', borderRadius: 999, border: '1px solid var(--border)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}>
           <ArrowLeft size={16} /> Back
         </button>
