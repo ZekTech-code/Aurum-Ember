@@ -70,7 +70,13 @@ export default function App() {
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
-  const [showSplash, setShowSplash] = useState(true);
+  const [showSplash, setShowSplash] = useState(() => {
+    try {
+      return !sessionStorage.getItem('ae-splash-seen');
+    } catch {
+      return true;
+    }
+  });
   const observerRef = useRef(null);
 
   useEffect(() => {
@@ -134,7 +140,14 @@ export default function App() {
   return (
     <ErrorBoundary>
       {showSplash && (
-        <SplashScreen onComplete={() => setShowSplash(false)} />
+        <SplashScreen
+          onComplete={() => {
+            try {
+              sessionStorage.setItem('ae-splash-seen', '1');
+            } catch {}
+            setShowSplash(false);
+          }}
+        />
       )}
 
       {isOffline && !isAdminRoute && (
