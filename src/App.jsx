@@ -104,6 +104,38 @@ export default function App() {
     return () => cancelAnimationFrame(raf);
   }, [location.pathname, location.key, user]);
 
+  const prevSignedIn = useRef(!!user);
+  useLayoutEffect(() => {
+    const nowSignedIn = !!user;
+    const flipped = prevSignedIn.current !== nowSignedIn;
+    prevSignedIn.current = nowSignedIn;
+    if (!flipped) return;
+
+    const hardReset = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    hardReset();
+    document.documentElement.style.overflow = 'hidden';
+    let frames = 0;
+    const raf = requestAnimationFrame(function tick() {
+      frames += 1;
+      if (frames < 3) {
+        requestAnimationFrame(tick);
+        return;
+      }
+      hardReset();
+      document.documentElement.style.overflow = '';
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    });
+    return () => {
+      cancelAnimationFrame(raf);
+      document.documentElement.style.overflow = '';
+    };
+  }, [user]);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [location.pathname, location.key, user]);
