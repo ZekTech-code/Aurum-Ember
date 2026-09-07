@@ -9,7 +9,7 @@ import {
   Bell, Moon, Sun,
   Calendar, MessageSquare, 
   X, User as UserIcon,
-  DollarSign, AlertCircle, ShieldCheck, UserCog
+  DollarSign, AlertCircle, ShieldCheck, UserCog, ArrowUp
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useChat } from '../hooks/useChat';
@@ -407,7 +407,7 @@ const AdminDashboard = () => {
         </header>
 
         {/* Main Content Area */}
-        <main className={`flex-1 relative ${activeTab === 'messages' ? 'overflow-hidden p-1.5 md:p-3' : 'overflow-y-auto p-3 md:p-6 lg:p-8'} custom-scrollbar bg-admin-bg`}>
+        <main className={`admin-dashboard-main flex-1 relative ${activeTab === 'messages' ? 'overflow-hidden p-1.5 md:p-3' : 'overflow-y-auto p-3 md:p-6 lg:p-8'} custom-scrollbar bg-admin-bg`}>
           <div className={activeTab === 'messages' ? 'h-full' : 'max-w-7xl mx-auto'}>
             <AnimatePresence mode="wait">
               <motion.div
@@ -434,6 +434,19 @@ const AdminDashboard = () => {
           </div>
         </main>
       </div>
+
+      {/* Scroll to Top */}
+      <button
+        onClick={() => {
+          const main = document.querySelector('.admin-dashboard-main');
+          if (main) main.scrollTo({ top: 0, behavior: 'smooth' });
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        aria-label="Back to top"
+        className="fixed bottom-6 right-6 z-40 p-3 bg-accent text-white rounded-full shadow-xl shadow-accent/20 hover:scale-110 active:scale-95 transition-all cursor-pointer"
+      >
+        <ArrowUp size={20} />
+      </button>
 
       {/* Reset Confirmation Modal */}
       <AnimatePresence>

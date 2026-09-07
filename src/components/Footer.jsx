@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { ArrowUp } from "lucide-react";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 
 export default function Footer() {
@@ -75,6 +76,14 @@ export default function Footer() {
       {/* Divider */}
       <div className="border-t border-(--border) mt-12 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-medium text-(--text-muted)">
         <p>© {new Date().getFullYear()} Aurum & Ember. All rights reserved.</p>
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label="Back to top"
+          className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-(--bg-card) text-(--text-primary) shadow hover:bg-(--brand-gold) hover:text-white transition"
+        >
+          Back to Top
+          <ArrowUp size={14} />
+        </button>
       </div>
     </motion.footer>
   );
