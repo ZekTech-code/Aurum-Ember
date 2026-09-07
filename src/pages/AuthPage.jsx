@@ -933,6 +933,7 @@ const AuthPage = () => {
           setShowSuccess(false);
           if (successIsLogin) {
             finalizeLogin(pendingUser);
+            window.scrollTo(0, 0);
             navigate('/');
           } else {
             setIsLogin(true);
