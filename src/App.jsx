@@ -5,7 +5,6 @@ import Navbar from "./components/Navbar";
 import MenuSection from "./components/Menu";
 import "./index.css";
 import Footer from "./components/Footer";
-import SplashScreen from "./components/SplashScreen";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PageLayout from "./components/PageLayout";
@@ -70,14 +69,11 @@ export default function App() {
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
-  const [showSplash, setShowSplash] = useState(() => {
-    try {
-      return !sessionStorage.getItem('ae-splash-seen');
-    } catch {
-      return true;
-    }
-  });
   const observerRef = useRef(null);
+
+  useEffect(() => {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  }, []);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDark);
@@ -95,8 +91,8 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  }, [location.pathname]);
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [location.pathname, location.key, user]);
 
   useEffect(() => {
     if (!location.hash) return;
@@ -139,17 +135,6 @@ export default function App() {
 
   return (
     <ErrorBoundary>
-      {showSplash && (
-        <SplashScreen
-          onComplete={() => {
-            try {
-              sessionStorage.setItem('ae-splash-seen', '1');
-            } catch {}
-            setShowSplash(false);
-          }}
-        />
-      )}
-
       {isOffline && !isAdminRoute && (
         <Suspense fallback={<RouteFallback />}>
           <OfflinePage />
