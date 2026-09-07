@@ -394,6 +394,7 @@ const SettingsField = ({
       type={type}
       defaultValue={defaultValue}
       placeholder={placeholder}
+      autoComplete={type === 'password' ? 'new-password' : 'off'}
       className="w-full bg-admin-bg/50 border border-admin-border rounded-2xl py-4 px-6 text-admin-text outline-none focus:border-accent transition-all"
     />
   </div>

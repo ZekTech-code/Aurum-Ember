@@ -60,6 +60,7 @@ const AdminSearch = ({
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
+          autoComplete="off"
           placeholder={placeholder}
           className="w-full bg-transparent border-none outline-none text-[13px] font-medium text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-colors"
         />
