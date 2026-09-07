@@ -18,6 +18,15 @@ import Home from "./components/Hero";
 const OfflinePage = lazy(() => import("./pages/OfflinePage"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
+function RouteFallback() {
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: 'var(--bg-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
+      <div style={{ width: 44, height: 44, borderRadius: '50%', border: '3px solid var(--border)', borderTopColor: 'var(--brand-gold)', animation: 'routeSpin 0.8s linear infinite' }} />
+      <style>{`@keyframes routeSpin { to { transform: rotate(360deg); } }`}</style>
+    </div>
+  );
+}
+
 import AboutPage from "./components/About";
 import Testimonials from "./components/Testimonials";
 import Events from "./components/Events";
@@ -129,7 +138,7 @@ export default function App() {
       )}
 
       {isOffline && !isAdminRoute && (
-        <Suspense fallback={<SplashScreen onComplete={() => {}} />}>
+        <Suspense fallback={<RouteFallback />}>
           <OfflinePage />
         </Suspense>
       )}
@@ -142,7 +151,7 @@ export default function App() {
       )}
 
       {!isOffline && (
-        <Suspense fallback={<SplashScreen onComplete={() => {}} />}>
+        <Suspense fallback={<RouteFallback />}>
           <Routes>
             <Route
               path="/"
