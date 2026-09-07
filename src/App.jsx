@@ -196,7 +196,7 @@ export default function App() {
       )}
 
       {!isOffline && (
-        <Suspense fallback={<RouteFallback />}>
+        <Suspense key={user ? 'signed-in' : 'guest'} fallback={<RouteFallback />}>
           <Routes>
             <Route
               path="/"

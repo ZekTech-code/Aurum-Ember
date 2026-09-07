@@ -3,6 +3,12 @@ import { AuthContext } from './AuthContextInstance';
 
 const API_BASE = '/api';
 
+function resetScroll() {
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+}
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(() => {
@@ -73,6 +79,7 @@ export function AuthProvider({ children }) {
       }
       sessionStorage.setItem('ae-user-token', data.token);
       setToken(data.token);
+      resetScroll();
       return { success: true, user: data };
     } catch {
       return { success: false, error: 'Unable to connect to server' };
@@ -113,6 +120,7 @@ export function AuthProvider({ children }) {
       }
       sessionStorage.setItem('ae-user-token', data.token);
       setToken(data.token);
+      resetScroll();
       return { success: true, user: data };
     } catch {
       return { success: false, error: 'Unable to connect to server' };
@@ -120,6 +128,7 @@ export function AuthProvider({ children }) {
   };
 
   const logout = () => {
+    resetScroll();
     setUser(null);
     setToken(null);
     sessionStorage.removeItem('ae-user-token');
@@ -131,6 +140,7 @@ export function AuthProvider({ children }) {
       setToken(userData.token);
     }
     setUser(userData);
+    resetScroll();
   };
 
   const updateProfile = async (updates) => {
