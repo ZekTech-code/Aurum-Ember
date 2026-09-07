@@ -134,28 +134,17 @@ function matchCategory(item, cat) {
 }
 
 /* ── Main Menu ── */
-const CACHE_KEY = "ae-menu-cache-v1";
-
-function getMenuCache() {
-  try {
-    const raw = localStorage.getItem(CACHE_KEY);
-    const parsed = raw ? JSON.parse(raw) : null;
-    return Array.isArray(parsed) && parsed.length > 0 ? parsed : null;
-  } catch {
-    return null;
-  }
-}
+let menuCache = null;
 
 export default function Menu({ mode = "home" }) {
-  const cachedItems = getMenuCache();
-  const [allItems, setAllItems] = useState(cachedItems || []);
-  const [loading, setLoading] = useState(!cachedItems);
+  const [allItems, setAllItems] = useState(menuCache || []);
+  const [loading, setLoading] = useState(!menuCache);
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [visibleCount, setVisibleCount] = useState(12);
 
   useEffect(() => {
-    setLoading(!cachedItems);
+    setLoading(!menuCache);
     setError(null);
     let cancelled = false;
     const run = async () => {
@@ -165,12 +154,12 @@ export default function Menu({ mode = "home" }) {
         const data = await res.json();
         const items = data.items || [];
         if (!cancelled) {
+          menuCache = items;
           setAllItems(items);
-          try { localStorage.setItem(CACHE_KEY, JSON.stringify(items)); } catch { /* ignore */ }
         }
       } catch (e) {
         console.error(e);
-        if (!cancelled && !cachedItems) setError("Failed to load menu. Please try again.");
+        if (!cancelled && !menuCache) setError("Failed to load menu. Please try again.");
       } finally {
         if (!cancelled) setLoading(false);
       }
