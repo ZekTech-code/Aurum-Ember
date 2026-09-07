@@ -51,7 +51,7 @@ export default function usePaymentProcessing() {
   const [ussdDetails, setUssdDetails] = useState(null);
   const [authorizationUrl, setAuthorizationUrl] = useState(null);
 
-  const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const subtotal = cart.reduce((acc, item) => acc + (Number(item?.price) || 0) * (Number(item?.quantity) || 0), 0);
   const deliveryFee = deliveryData.deliveryFee;
   const totalAmount = Math.max(0, subtotal + deliveryFee - promoDiscount);
 
