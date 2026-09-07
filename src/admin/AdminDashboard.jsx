@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useOrders } from '../hooks/useOrders';
 import { useAuth } from '../hooks/useAuth';
-import SplashScreen from '../components/SplashScreen';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   LayoutDashboard, Store, ShoppingBag, 
@@ -227,7 +226,11 @@ const AdminDashboard = () => {
   const isExpanded = isSidebarOpen || isMobileMenuOpen;
 
   if (isAuthenticating) {
-    return <SplashScreen onComplete={() => setIsAuthenticating(false)} />;
+    return (
+      <div className="h-screen flex items-center justify-center bg-admin-bg">
+        <div className="w-12 h-12 rounded-full border-4 border-admin-border border-t-accent animate-spin" />
+      </div>
+    );
   }
 
   return (
