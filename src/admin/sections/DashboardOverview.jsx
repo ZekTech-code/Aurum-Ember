@@ -118,7 +118,7 @@ const DashboardOverview = ({ orders = [] }) => {
     <div className="space-y-6 md:space-y-8 animate-in fade-in duration-500">
       {/* Header */}
       <div>
-        <h1 className="text-xl md:text-3xl font-black text-admin-text mb-1 md:mb-2">Welcome Back, Chief</h1>
+        <h1 className="text-xl md:text-3xl font-black text-admin-text mb-1 md:mb-2">Welcome Back, Admin</h1>
         <p className="text-xs md:text-sm text-admin-text-muted">Here's what's happening with your restaurant today.</p>
       </div>
 
