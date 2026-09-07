@@ -636,7 +636,7 @@ body {
 
 /* PAGE BODY */
 .page-content {
-  padding-top: 0;
+  padding-top: calc(var(--navbar-height) + 24px);
   min-height: 100vh;
   background: #0f0e0c;
   transition: background 0.4s ease;
