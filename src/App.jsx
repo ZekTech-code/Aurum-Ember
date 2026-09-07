@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowUp } from "lucide-react";
 import Navbar from "./components/Navbar";
 import MenuSection from "./components/Menu";
 import "./index.css";
@@ -69,6 +70,7 @@ export default function App() {
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const observerRef = useRef(null);
 
   useEffect(() => {
@@ -93,6 +95,15 @@ export default function App() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
   }, [location.pathname, location.key, user]);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.pageYOffset || document.documentElement.scrollTop || 0;
+      setShowScrollTop(y > 300);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   useEffect(() => {
     if (!location.hash) return;
@@ -209,6 +220,27 @@ export default function App() {
         </Suspense>
       )}
       {!isOffline && user && !isAdminRoute && !isCheckoutRoute && <Footer />}
+
+      {!isAdminRoute && (
+        <AnimatePresence>
+          {showScrollTop && (
+            <motion.button
+              initial={{ opacity: 0, y: 24, scale: 0.7 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 24, scale: 0.7 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.92 }}
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              aria-label="Back to top"
+              className="group fixed bottom-6 right-6 z-40 grid place-items-center p-3.5 md:p-4 rounded-full bg-(--brand-gold) text-white shadow-[0_8px_30px_rgba(0,0,0,0.35)] cursor-pointer"
+            >
+              <span className="absolute inset-[-3px] rounded-full border-2 border-(--brand-gold)/40 border-t-transparent opacity-0 group-hover:opacity-100 group-hover:animate-spin [animation-duration:3s] transition-opacity duration-300" />
+              <ArrowUp size={20} className="transition-transform duration-400 group-hover:-translate-y-1.5 group-hover:animate-bounce [animation-duration:1.2s]" />
+            </motion.button>
+          )}
+        </AnimatePresence>
+      )}
     </ErrorBoundary>
   );
 }
