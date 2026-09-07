@@ -1,9 +1,16 @@
 const BASE = 'https://www.themealdb.com/api/json/v1/1';
+const TIMEOUT_MS = 10000;
 
 async function fetchJSON(url) {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 function normalizeMeal(meal) {
@@ -37,10 +44,15 @@ export async function searchMeals(query) {
   return (Array.isArray(data.meals) ? data.meals : []).map(normalizeMeal).filter(Boolean);
 }
 
+const detailCache = new Map();
+
 export async function getMealById(id) {
   if (!id) return null;
+  if (detailCache.has(id)) return detailCache.get(id);
   const data = await fetchJSON(`${BASE}/lookup.php?i=${encodeURIComponent(id)}`);
-  return data.meals && data.meals.length > 0 ? normalizeMeal(data.meals[0]) : null;
+  const meal = data.meals && data.meals.length > 0 ? normalizeMeal(data.meals[0]) : null;
+  detailCache.set(id, meal);
+  return meal;
 }
 
 export async function getRandomMeal() {

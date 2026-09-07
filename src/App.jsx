@@ -20,8 +20,8 @@ const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
 function RouteFallback() {
   return (
-    <div style={{ position: 'fixed', inset: 0, background: 'var(--bg-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
-      <div style={{ width: 44, height: 44, borderRadius: '50%', border: '3px solid var(--border)', borderTopColor: 'var(--brand-gold)', animation: 'routeSpin 0.8s linear infinite' }} />
+    <div style={{ position: 'fixed', inset: 0, background: '#0f0e0c', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
+      <div style={{ width: 44, height: 44, borderRadius: '50%', border: '3px solid rgba(255,255,255,0.15)', borderTopColor: 'var(--brand-gold)', animation: 'routeSpin 0.8s linear infinite' }} />
       <style>{`@keyframes routeSpin { to { transform: rotate(360deg); } }`}</style>
     </div>
   );
