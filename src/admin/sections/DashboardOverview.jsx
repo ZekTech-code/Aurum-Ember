@@ -43,7 +43,15 @@ const DashboardOverview = ({ orders = [] }) => {
   
   // Ensure orders is an array
   const safeOrders = Array.isArray(orders) ? orders : [];
-  
+
+  // Pay-on-delivery only counts toward revenue once confirmed/marked as paid
+  const isRevenueConfirmed = (o) => {
+    const method = (o.paymentMethod || '').toLowerCase();
+    const isCOD = method === 'pay_on_delivery' || method === 'cod';
+    if (isCOD) return o.paymentStatus === 'paid';
+    return o.status !== 'cancelled';
+  };
+
   // Helper function to get real customer name
   const getCustomerName = (order) => {
     if (order.deliveryInfo?.fullName) return order.deliveryInfo.fullName;
@@ -55,7 +63,7 @@ const DashboardOverview = ({ orders = [] }) => {
     return 'Guest Account';
   };
   
-  const totalRevenue = safeOrders.filter(o => o.status !== 'cancelled').reduce((sum, o) => sum + (Number(o.totalAmount) || 0), 0);
+  const totalRevenue = safeOrders.filter(isRevenueConfirmed).reduce((sum, o) => sum + (Number(o.totalAmount) || 0), 0);
   const pendingOrders = safeOrders.filter(o => o.status === 'awaiting').length;
   const activeCustomers = new Set(safeOrders.map(o => o.userEmail).filter(Boolean)).size;
   
@@ -91,7 +99,7 @@ const DashboardOverview = ({ orders = [] }) => {
         .filter(o => {
           const oDate = o.date ? new Date(o.date).toISOString().split('T')[0] : 
                         o.createdAt ? new Date(o.createdAt).toISOString().split('T')[0] : null;
-          return oDate === dayStr && o.status !== 'cancelled';
+          return oDate === dayStr && isRevenueConfirmed(o);
         })
         .reduce((sum, o) => sum + (Number(o.totalAmount) || 0), 0);
       days.push({ label, revenue: dayRevenue, date: dayStr });
