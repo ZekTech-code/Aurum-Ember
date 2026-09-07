@@ -14,6 +14,11 @@ const backgrounds = [
 
 export default function HomePage() {
   const [activeBg, setActiveBg] = useState(0);
+  const [loadedBg, setLoadedBg] = useState({});
+
+  const handleImgLoad = (i) => {
+    setLoadedBg((prev) => (prev[i] ? prev : { ...prev, [i]: true }));
+  };
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -24,8 +29,14 @@ export default function HomePage() {
 
   return (
     <section
-      className="relative w-full min-h-150 lg:min-h-170 xl:min-h-185 overflow-hidden rounded-lg mx-auto bg-[#111111]"
-      style={{ marginTop: 'calc(-1 * var(--navbar-height, 76px))' }}
+      className="relative w-full min-h-150 lg:min-h-170 xl:min-h-185 overflow-hidden rounded-lg mx-auto"
+      style={{
+        marginTop: 'calc(-1 * var(--navbar-height, 76px))',
+        backgroundImage: `url(${backgrounds[0]})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundColor: '#111111',
+      }}
     >
       <div className="relative w-full h-full min-h-[inherit] overflow-hidden rounded-lg">
         {/* ── Background Layers ── */}
@@ -40,7 +51,8 @@ export default function HomePage() {
               alt=""
               loading={i === 0 ? "eager" : "lazy"}
               fetchPriority={i === 0 ? "high" : "auto"}
-              className="absolute inset-0 w-full h-full object-cover"
+              onLoad={() => handleImgLoad(i)}
+              className={`absolute inset-0 w-full h-full object-cover ${loadedBg[i] ? '' : 'opacity-0'}`}
             />
           </div>
         ))}
