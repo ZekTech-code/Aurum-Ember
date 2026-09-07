@@ -94,10 +94,34 @@ export default function App() {
 
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   }, [location.pathname, location.key, user]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [location.pathname, location.key, user]);
+
+  useEffect(() => {
+    if (!location.hash) return;
+    const sectionId = location.hash.replace("#", "");
+    const timer = setTimeout(() => {
+      const section = document.getElementById(sectionId);
+      if (!section) return;
+      const navOffset = window.innerWidth <= 768 ? 72 : 84;
+      const top = section.getBoundingClientRect().top + window.scrollY - navOffset;
+      window.scrollTo({ top: Math.max(top, 0), behavior: "smooth" });
+    }, 60);
+    return () => clearTimeout(timer);
+  }, [location.pathname, location.hash]);
+
+  useEffect(() => {
+    if (!location.hash) {
+      const timer = setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 300);
+      return () => clearTimeout(timer);
+    }
   }, [location.pathname, location.key, user]);
 
   useEffect(() => {
