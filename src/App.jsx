@@ -80,6 +80,10 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [location.pathname]);
+
+  useEffect(() => {
     if (!location.hash) return;
     const sectionId = location.hash.replace("#", "");
     const timer = setTimeout(() => {
@@ -220,15 +224,9 @@ function HomePage() {
   return (
     <PageLayout>
       <Home />
-      <motion.div
-        id="menu"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={sectionVariants}
-      >
+      <div id="menu">
         <MenuSection mode="home" />
-      </motion.div>
+      </div>
       <motion.section
         id="about"
         initial="hidden"
