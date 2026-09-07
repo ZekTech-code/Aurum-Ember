@@ -38,24 +38,17 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 html {
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
   overflow-x: hidden;
-  overflow-anchor: none;
 }
 
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
-  background-color: #0f0e0c;
+  background-color: var(--bg-primary);
   color: var(--text-primary);
   transition: background-color 0.4s ease, color 0.4s ease;
   -webkit-font-smoothing: antialiased;
-  overflow-anchor: none;
-}
-
-#root {
-  background-color: #0f0e0c;
-  min-height: 100vh;
 }
 
 /* Utility classes */
@@ -638,7 +631,7 @@ body {
 .page-content {
   padding-top: calc(var(--navbar-height) + 24px);
   min-height: 100vh;
-  background: #0f0e0c;
+  background: var(--bg-primary);
   transition: background 0.4s ease;
 }
 

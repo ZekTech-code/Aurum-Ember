@@ -4,21 +4,16 @@ import { motion } from "framer-motion";
 import { ArrowRight, Utensils } from "lucide-react";
 
 const backgrounds = [
-  "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?w=1200&q=80",
-  "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?w=1200&q=80",
-  "https://images.pexels.com/photos/262897/pexels-photo-262897.jpeg?w=1200&q=80",
-  "https://images.pexels.com/photos/2092897/pexels-photo-2092897.jpeg?w=1200&q=80",
-  "https://images.pexels.com/photos/1395967/pexels-photo-1395967.jpeg?w=1200&q=80",
-  "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?w=1200&q=80",
+  "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg",
+  "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg",
+  "https://images.pexels.com/photos/262897/pexels-photo-262897.jpeg",
+  "https://images.pexels.com/photos/2092897/pexels-photo-2092897.jpeg",
+  "https://images.pexels.com/photos/1395967/pexels-photo-1395967.jpeg",
+  "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg",
 ];
 
 export default function HomePage() {
   const [activeBg, setActiveBg] = useState(0);
-  const [loadedBg, setLoadedBg] = useState({});
-
-  const handleImgLoad = (i) => {
-    setLoadedBg((prev) => (prev[i] ? prev : { ...prev, [i]: true }));
-  };
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -29,40 +24,37 @@ export default function HomePage() {
 
   return (
     <section
-      className="relative w-full min-h-180 lg:min-h-200 xl:min-h-220 overflow-hidden rounded-lg mx-auto"
-      style={{
-        marginTop: 'calc(-1 * var(--navbar-height) - 24px)',
-        backgroundImage: `url(${backgrounds[0]})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundColor: '#111111',
-      }}
+      className="relative w-full min-h-150 lg:min-h-170 xl:min-h-185 overflow-hidden rounded-lg mx-auto pt-23 md:pt-24 lg:pt-25"
+      style={{ marginTop: 'calc(-1 * (var(--navbar-height, 76px) + 24px))' }}
     >
       <div className="relative w-full h-full min-h-[inherit] overflow-hidden rounded-lg">
-        {/* ── Background Layers ── */}
+        {/* Background Layers */}
         {backgrounds.map((bg, i) => (
           <div
             key={bg}
             className="absolute inset-0 transition-opacity duration-1500 ease-in-out pointer-events-none"
             style={{ opacity: i === activeBg ? 1 : 0 }}
           >
-            <img
-              src={bg}
-              alt=""
-              loading={i === 0 ? "eager" : "lazy"}
-              fetchPriority={i === 0 ? "high" : "auto"}
-              onLoad={() => handleImgLoad(i)}
-              className={`absolute inset-0 w-full h-full object-cover ${loadedBg[i] ? '' : 'opacity-0'}`}
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage: `url(${bg})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+              }}
             />
           </div>
         ))}
 
-        {/* ── Overlays ── */}
+        {/* Overlays */}
         <div className="absolute inset-0 z-2 bg-black/50 dark:bg-black/70 transition-colors duration-500" />
         <div className="absolute inset-0 z-2 bg-linear-to-r from-black/80 via-black/40 to-transparent" />
 
-        {/* ── Content ── */}
-        <div className="relative z-10 mx-auto h-full flex items-center" style={{
+        {/* Content */}
+        <div
+          className="relative z-10 mx-auto h-full flex items-center"
+          style={{
             maxWidth: "80rem",
             paddingInline: "clamp(1.5rem, 5vw, 5rem)",
             minHeight: "inherit",
