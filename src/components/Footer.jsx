@@ -81,7 +81,6 @@ export default function Footer() {
           aria-label="Back to top"
           className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-(--bg-card) text-(--text-primary) shadow hover:bg-(--brand-gold) hover:text-white transition"
         >
-          Back to Top
           <ArrowUp size={14} />
         </button>
       </div>
