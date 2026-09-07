@@ -24,7 +24,7 @@ export default function HomePage() {
 
   return (
     <section
-      className="relative w-full min-h-150 lg:min-h-170 xl:min-h-185 overflow-hidden rounded-lg mx-auto pt-23 md:pt-24 lg:pt-25"
+      className="relative w-full min-h-150 lg:min-h-170 xl:min-h-185 overflow-hidden rounded-lg mx-auto pt-23 md:pt-24 lg:pt-25 bg-[#111111]"
       style={{ marginTop: 'calc(-1 * (var(--navbar-height, 76px) + 24px))' }}
     >
       <div className="relative w-full h-full min-h-[inherit] overflow-hidden rounded-lg">
