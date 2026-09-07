@@ -6,9 +6,9 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-  <script>
+<script>
     (function () {
-      const originalSend = WebSocket.prototype.send;
+      var originalSend = WebSocket.prototype.send;
       WebSocket.prototype.send = function (data) {
         if (this.readyState === 0) {
           const self = this;
@@ -23,6 +23,15 @@
           return originalSend.call(this, data);
         }
       };
+    })();
+  </script>
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme');
+      var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var root = document.documentElement;
+      root.classList.toggle('dark', dark);
+      root.style.backgroundColor = dark ? '#000000' : '#FFFFFF';
     })();
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
