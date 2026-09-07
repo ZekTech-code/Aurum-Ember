@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, lazy, Suspense } from "react";
+import { useState, useEffect, useLayoutEffect, useRef, lazy, Suspense } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUp } from "lucide-react";
@@ -91,6 +91,10 @@ export default function App() {
   useEffect(() => {
     if (!navigator.onLine) setIsOffline(true);
   }, []);
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname, location.key, user]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
