@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { motion } from "framer-motion";
 import { getDrinkById } from "../api/cocktailDb";
 import { ShoppingCart, ShoppingBag, ArrowLeft, Wine, GlassWater } from "lucide-react";
 import { useCart } from "../hooks/useCart";
@@ -81,6 +82,11 @@ export default function DrinkDetailPage() {
 
   return (
     <PageLayout>
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: [0.21, 0.6, 0.35, 1] }}
+      >
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 20px 60px' }}>
         <button onClick={() => navigate(-1)} style={{ marginBottom: 18, padding: '8px 14px', borderRadius: 999, border: '1px solid var(--border)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}>
           <ArrowLeft size={16} /> Back
@@ -179,6 +185,7 @@ export default function DrinkDetailPage() {
           </aside>
         </div>
       </div>
+      </motion.div>
     </PageLayout>
   );
 }
