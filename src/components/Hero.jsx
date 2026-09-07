@@ -29,7 +29,7 @@ export default function HomePage() {
 
   return (
     <section
-      className="relative w-full min-h-150 lg:min-h-170 xl:min-h-185 overflow-hidden rounded-lg mx-auto"
+      className="relative w-full min-h-180 lg:min-h-200 xl:min-h-220 overflow-hidden rounded-lg mx-auto"
       style={{
         marginTop: 'calc(-1 * var(--navbar-height, 76px))',
         backgroundImage: `url(${backgrounds[0]})`,
