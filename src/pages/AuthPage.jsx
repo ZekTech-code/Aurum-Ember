@@ -856,12 +856,12 @@ const AuthPage = () => {
               {
                 title: "Chef's Table",
                 desc: "An intimate front-row seat to the culinary ballet. Watch as our master chefs craft a 12-course narrative right before your eyes.",
-                img: "/images/hero_salmon.png"
+                img: "/images/hero_salmon.jpg"
               },
               {
                 title: "The Ember Vault",
                 desc: "Deep within our cellar lies a private sanctuary for rare vintage tastings and exclusive multi-course fire-side pairings.",
-                img: "/images/suya_platter.png"
+                img: "/images/suya_platter.jpg"
               },
               {
                 title: "Moonlight Terrace",

@@ -9,8 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
 const SLIDESHOW_IMAGES = [
-  { src: '/images/hero_salmon.png', alt: 'Pan-seared salmon fillet' },
-  { src: '/images/suya_platter.png', alt: 'Signature suya platter' },
+  { src: '/images/hero_salmon.jpg', alt: 'Pan-seared salmon fillet' },
+  { src: '/images/suya_platter.jpg', alt: 'Signature suya platter' },
   { src: '/images/jollof_rice.jpg', alt: 'Jollof rice' },
 ];
 

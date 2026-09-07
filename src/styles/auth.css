@@ -138,7 +138,7 @@
   padding: 60px;
   display: flex;
   align-items: center;
-  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/images/hero_salmon.png') center/cover no-repeat;
+  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/images/hero_salmon.jpg') center/cover no-repeat;
 }
 
 .welcome-inner h2 {

@@ -52,7 +52,7 @@ const AboutSection = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 1.2, ease: "easeOut" }}
-                src="/images/hero_salmon.png"
+                src="/images/hero_salmon.jpg"
                 alt="Restaurant interior"
                 className="rounded-2xl object-cover h-64 w-full"
                 loading="lazy"
@@ -64,7 +64,7 @@ const AboutSection = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
-                src="/images/suya_platter.png"
+                src="/images/suya_platter.jpg"
                 alt="Chef cooking"
                 className="rounded-2xl object-cover h-64 w-full"
                 loading="lazy"
