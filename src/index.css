@@ -45,10 +45,15 @@ html {
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
-  background-color: var(--bg-primary);
+  background-color: #0f0e0c;
   color: var(--text-primary);
   transition: background-color 0.4s ease, color 0.4s ease;
   -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  background-color: #0f0e0c;
+  min-height: 100vh;
 }
 
 /* Utility classes */
