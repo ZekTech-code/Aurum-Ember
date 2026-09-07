@@ -93,11 +93,11 @@ export default function App() {
   }, []);
 
   useLayoutEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
     const raf = requestAnimationFrame(() => {
-      window.scrollTo(0, 0);
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
     });
@@ -105,7 +105,7 @@ export default function App() {
   }, [location.pathname, location.key, user]);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'auto' });
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }, [location.pathname, location.key, user]);
 
   useEffect(() => {
@@ -124,7 +124,9 @@ export default function App() {
   useEffect(() => {
     if (!location.hash) {
       const timer = setTimeout(() => {
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
       }, 300);
       return () => clearTimeout(timer);
     }
