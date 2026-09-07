@@ -133,7 +133,7 @@ const SettingsPage = ({
           {/* GENERAL */}
           {activeTab === 'general' && (
             <div className="admin-panel p-8 space-y-8 bg-admin-card shadow-sm">
-              <div className="flex flex-col items-center text-center gap-4">
+              <div className="flex items-center gap-8 flex-wrap">
                 <div className="relative group">
                   {adminProfile.image ? (
                     <img
@@ -162,7 +162,7 @@ const SettingsPage = ({
                     Administrator Profile
                   </h3>
 
-                  <p className="text-admin-text-muted text-sm max-w-xs mx-auto">
+                  <p className="text-admin-text-muted text-sm max-w-xs">
                     Your profile image is synced with your
                     public account. Changes here reflect
                     everywhere.
