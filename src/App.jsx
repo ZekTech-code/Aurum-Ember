@@ -102,7 +102,7 @@ export default function App() {
       document.body.scrollTop = 0;
     });
     return () => cancelAnimationFrame(raf);
-  }, [location.pathname, location.key]);
+  }, [location.pathname, location.key, user]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
