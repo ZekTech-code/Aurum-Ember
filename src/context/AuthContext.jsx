@@ -11,6 +11,7 @@ function resetScroll() {
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(() => {
     return !!sessionStorage.getItem('ae-admin-token');
   });
@@ -27,8 +28,11 @@ export function AuthProvider({ children }) {
   }, [user]);
 
   useEffect(() => {
-    if (!tokenRef.current || userRef.current) return;
     const t = tokenRef.current;
+    if (!t) {
+      setAuthLoading(false);
+      return;
+    }
     (async () => {
       try {
         const res = await fetch(`${API_BASE}/users/profile`, {
@@ -43,6 +47,8 @@ export function AuthProvider({ children }) {
       } catch {
         sessionStorage.removeItem('ae-user-token');
         setToken(null);
+      } finally {
+        setAuthLoading(false);
       }
     })();
   }, []);
@@ -266,6 +272,7 @@ export function AuthProvider({ children }) {
     <AuthContext.Provider value={{ 
       user, 
       token,
+      authLoading,
       login, 
       register, 
       googleLogin,

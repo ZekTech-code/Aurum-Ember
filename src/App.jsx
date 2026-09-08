@@ -57,7 +57,7 @@ const OrderSuccess = lazy(() => import("./pages/OrderSuccess"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 
 export default function App() {
-  const { user } = useAuth();
+  const { user, authLoading } = useAuth();
   const { orders, deleteOrder, cancelOrder } = useOrders();
   const { cart, addToCart, updateQuantity, clearCart, totalCartCount } = useCart();
   const location = useLocation();
@@ -227,7 +227,9 @@ export default function App() {
         />
       )}
 
-      {!isOffline && (
+      {!isOffline && authLoading && <RouteFallback />}
+
+      {!isOffline && !authLoading && (
         <Suspense key={user ? 'signed-in' : 'guest'} fallback={<RouteFallback />}>
           <Routes>
             <Route
