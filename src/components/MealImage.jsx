@@ -91,7 +91,7 @@ export default function MealImage({ name, image, category, className = "", style
     : FoodPlaceholderSVG({ bg, fg, initials });
 
   if (!imgSrc || attempted) {
-    return <img src={fallbackSrc} alt={name || 'Food'} className={className} style={style} loading={priority ? "eager" : "lazy"} fetchPriority={priority ? "high" : "auto"} />;
+    return <img src={fallbackSrc} alt={name || 'Food'} className={className} style={style} loading="eager" fetchPriority="high" />;
   }
 
   return (
@@ -100,8 +100,8 @@ export default function MealImage({ name, image, category, className = "", style
       alt={name || 'Food'}
       className={className}
       style={style}
-      loading={priority ? "eager" : "lazy"}
-      fetchPriority={priority ? "high" : "auto"}
+      loading="eager"
+      fetchPriority="high"
       onError={handleError}
     />
   );
