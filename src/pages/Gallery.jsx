@@ -5,8 +5,6 @@ import PageLayout from "../components/PageLayout";
 
 function Gallery() {
   const [meals, setMeals] = useState([]);
-  const [loading, setLoading] = useState(true);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,25 +23,11 @@ function Gallery() {
         setMeals(mapped.slice(0, 200));
       } catch {
         // Silent fail
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchMeals();
   }, []);
-
-  if (loading) {
-    return (
-      <PageLayout className="flex items-center justify-center">
-        <div style={{ textAlign: "center" }}>
-          <div style={{ width: "55px", height: "55px", border: "4px solid var(--border)", borderTop: "4px solid var(--brand-gold)", borderRadius: "50%", margin: "0 auto 18px", animation: "spin 1s linear infinite" }} />
-          <h2 style={{ fontSize: "18px", fontWeight: "600" }}>Loading Signature Meals...</h2>
-          <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-        </div>
-      </PageLayout>
-    );
-  }
 
   return (
     <PageLayout>
