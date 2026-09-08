@@ -59,11 +59,9 @@ const AuthPage = () => {
           picture: payload.picture,
         });
         if (result.success) {
-          window.scrollTo(0, 0);
-          document.documentElement.scrollTop = 0;
-          document.body.scrollTop = 0;
-          finalizeLogin(result.user);
-          navigate('/');
+          setPendingUser(result.user);
+          setSuccessIsLogin(true);
+          setShowSuccess(true);
         } else {
           setErrors({ auth: result.error });
         }
@@ -200,17 +198,9 @@ const AuthPage = () => {
 
       if (result.success) {
         setLoading(false);
-        if (isLogin) {
-          window.scrollTo(0, 0);
-          document.documentElement.scrollTop = 0;
-          document.body.scrollTop = 0;
-          finalizeLogin(result.user);
-          navigate('/');
-        } else {
-          setSuccessIsLogin(false);
-          setPendingUser(result.user);
-          setShowSuccess(true);
-        }
+        setSuccessIsLogin(isLogin);
+        setPendingUser(result.user);
+        setShowSuccess(true);
       } else {
         setErrors({ auth: result.error });
         setLoading(false);
@@ -937,14 +927,22 @@ const AuthPage = () => {
          </div>
       </footer>
 
-      {/* Auth Success Modal — registration only */}
+      {/* Auth Success Modal */}
       <AuthSuccessModal
         isOpen={showSuccess}
         onClose={() => {
           setShowSuccess(false);
-          setIsLogin(true);
+          if (successIsLogin) {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+            finalizeLogin(pendingUser);
+            navigate('/');
+          } else {
+            setIsLogin(true);
+          }
         }}
-        isLogin={false}
+        isLogin={successIsLogin}
         user={pendingUser}
       />
     </div>

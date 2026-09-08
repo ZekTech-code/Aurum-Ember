@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 import { ArrowRight, Utensils } from "lucide-react";
 
 const backgrounds = [
-  "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg",
-  "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg",
-  "https://images.pexels.com/photos/262897/pexels-photo-262897.jpeg",
-  "https://images.pexels.com/photos/2092897/pexels-photo-2092897.jpeg",
-  "https://images.pexels.com/photos/1395967/pexels-photo-1395967.jpeg",
-  "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg",
+  "linear-gradient(135deg, #1a1a1a 0%, #0f0e0c 50%, #1a1510 100%)",
+  "linear-gradient(135deg, #1a1510 0%, #0f0e0c 50%, #1a1a1a 100%)",
+  "linear-gradient(135deg, #0f0e0c 0%, #1a1a1a 50%, #1a1510 100%)",
+  "linear-gradient(135deg, #1a1a1a 0%, #1a1510 50%, #0f0e0c 100%)",
+  "linear-gradient(135deg, #1a1510 0%, #1a1a1a 50%, #0f0e0c 100%)",
+  "linear-gradient(135deg, #0f0e0c 0%, #1a1510 50%, #1a1a1a 100%)",
 ];
 
 export default function HomePage() {
