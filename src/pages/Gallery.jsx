@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import MealImage from "../components/MealImage";
 import PageLayout from "../components/PageLayout";
 
@@ -31,6 +32,11 @@ function Gallery() {
 
   return (
     <PageLayout>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+    >
     <section style={{ padding: "0 24px 80px", background: "var(--bg-primary)", color: "var(--text-primary)" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto 70px", textAlign: "center" }}>
         <span style={{ display: "inline-block", padding: "8px 18px", borderRadius: "999px", background: "rgba(201,146,42,0.12)", color: "var(--brand-gold)", fontSize: "13px", fontWeight: "600", marginBottom: "18px" }}>
@@ -79,6 +85,7 @@ function Gallery() {
         ))}
       </div>
     </section>
+    </motion.div>
     </PageLayout>
   );
 }

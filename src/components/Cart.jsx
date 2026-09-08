@@ -38,6 +38,11 @@ export default function Cart() {
 
   return (
     <PageLayout>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+      >
       <div className="transition-colors duration-400">
         <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         {/* ── Page Header ── */}
@@ -329,6 +334,7 @@ export default function Cart() {
         )}
       </div>
       </div>
+      </motion.div>
     </PageLayout>
   );
 }

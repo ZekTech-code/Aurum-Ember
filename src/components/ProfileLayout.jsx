@@ -8,6 +8,11 @@ const ProfileLayout = ({ title, subtitle, children }) => {
 
   return (
     <PageLayout>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+      >
       <div className="min-h-screen bg-(--bg-primary)">
         <div className="w-full max-w-3xl mx-auto px-5 sm:px-8 py-6 sm:py-8">
           {/* ── Back Button ── (desktop only) */}
@@ -45,6 +50,7 @@ const ProfileLayout = ({ title, subtitle, children }) => {
           </motion.div>
         </div>
       </div>
+      </motion.div>
     </PageLayout>
   );
 };

@@ -67,6 +67,11 @@ export default function ProfilePage() {
 
   return (
     <PageLayout>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+      >
       <div className="min-h-screen bg-(--bg-primary)">
         <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 md:px-8 py-5 sm:py-8">
 
@@ -169,6 +174,7 @@ export default function ProfilePage() {
         onCancel={() => setShowSignOutModal(false)}
         userName={user?.name}
       />
+      </motion.div>
     </PageLayout>
   );
 }
