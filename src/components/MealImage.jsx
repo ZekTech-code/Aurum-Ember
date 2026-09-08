@@ -59,7 +59,7 @@ function DrinkPlaceholderSVG({ fg, initials }) {
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }
 
-export default function MealImage({ name, image, category, className = "", style = {} }) {
+export default function MealImage({ name, image, category, className = "", style = {}, priority = false }) {
   const [imgSrc, setImgSrc] = useState(() => {
     if (image) return image;
     return null;
@@ -91,7 +91,7 @@ export default function MealImage({ name, image, category, className = "", style
     : FoodPlaceholderSVG({ bg, fg, initials });
 
   if (!imgSrc || attempted) {
-    return <img src={fallbackSrc} alt={name || 'Food'} className={className} style={style} loading="lazy" />;
+    return <img src={fallbackSrc} alt={name || 'Food'} className={className} style={style} loading={priority ? "eager" : "lazy"} fetchPriority={priority ? "high" : "auto"} />;
   }
 
   return (
@@ -100,7 +100,8 @@ export default function MealImage({ name, image, category, className = "", style
       alt={name || 'Food'}
       className={className}
       style={style}
-      loading="lazy"
+      loading={priority ? "eager" : "lazy"}
+      fetchPriority={priority ? "high" : "auto"}
       onError={handleError}
     />
   );

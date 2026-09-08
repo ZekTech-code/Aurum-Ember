@@ -41,7 +41,7 @@ function Stars() {
 }
 
 /* ── Menu Card ── */
-function MenuCard({ id, name, category, image, description }) {
+function MenuCard({ id, name, category, image, description, priority = false }) {
   const { cart, addToCart, updateQuantity } = useCart();
   const [liked, setLiked] = useState(false);
   const cartItem = useMemo(() => cart.find((c) => c.id === id), [cart, id]);
@@ -59,7 +59,7 @@ function MenuCard({ id, name, category, image, description }) {
     <article className="mn-card">
       {/* ── Image ── */}
       <div className="mn-card-img">
-        <MealImage name={name} image={image} category={category} className="mn-card-photo" />
+        <MealImage name={name} image={image} category={category} className="mn-card-photo" priority={priority} />
         <Link to={detailPath} className="mn-img-link" aria-label={`View ${name} details`} />
         <span className="mn-card-badge">{category}</span>
         <button
@@ -221,8 +221,8 @@ export default function Menu({ mode = "home" }) {
         {!loading && !error && (
           <>
             <div className="mn-grid">
-              {(mode === "home" ? filtered.slice(0, 12) : filtered.slice(0, visibleCount)).map((item) => (
-                <MenuCard key={item.id} {...item} />
+              {(mode === "home" ? filtered.slice(0, 12) : filtered.slice(0, visibleCount)).map((item, i) => (
+                <MenuCard key={item.id} {...item} priority={i < 4} />
               ))}
             </div>
 
