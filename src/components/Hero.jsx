@@ -58,7 +58,7 @@ export default function HomePage() {
             minHeight: "inherit",
           }}
         >
-          <div className="w-full py-16 md:py-20 text-center md:text-left">
+          <div className="w-full py-10 md:py-14 text-center md:text-left">
             <motion.span
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
