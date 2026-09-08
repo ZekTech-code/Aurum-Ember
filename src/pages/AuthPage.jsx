@@ -59,8 +59,11 @@ const AuthPage = () => {
           picture: payload.picture,
         });
         if (result.success) {
-          setPendingUser(result.user);
-          setShowSuccess(true);
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+          finalizeLogin(result.user);
+          navigate('/');
         } else {
           setErrors({ auth: result.error });
         }
@@ -197,9 +200,17 @@ const AuthPage = () => {
 
       if (result.success) {
         setLoading(false);
-        setSuccessIsLogin(isLogin);
-        setPendingUser(result.user);
-        setShowSuccess(true);
+        if (isLogin) {
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+          finalizeLogin(result.user);
+          navigate('/');
+        } else {
+          setSuccessIsLogin(false);
+          setPendingUser(result.user);
+          setShowSuccess(true);
+        }
       } else {
         setErrors({ auth: result.error });
         setLoading(false);
@@ -926,20 +937,14 @@ const AuthPage = () => {
          </div>
       </footer>
 
-      {/* Auth Success Modal */}
+      {/* Auth Success Modal — registration only */}
       <AuthSuccessModal
         isOpen={showSuccess}
         onClose={() => {
           setShowSuccess(false);
-          if (successIsLogin) {
-            finalizeLogin(pendingUser);
-            window.scrollTo(0, 0);
-            navigate('/');
-          } else {
-            setIsLogin(true);
-          }
+          setIsLogin(true);
         }}
-        isLogin={successIsLogin}
+        isLogin={false}
         user={pendingUser}
       />
     </div>

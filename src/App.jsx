@@ -287,7 +287,15 @@ export default function App() {
           </Routes>
         </Suspense>
       )}
-      {!isOffline && user && !isAdminRoute && !isCheckoutRoute && <Footer />}
+      {!isOffline && user && !isAdminRoute && !isCheckoutRoute && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Footer />
+        </motion.div>
+      )}
 
       {!isAdminRoute && (
         <AnimatePresence>
