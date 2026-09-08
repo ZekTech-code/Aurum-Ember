@@ -135,6 +135,16 @@ function matchCategory(item, cat) {
 
 /* ── Main Menu ── */
 let menuCache = null;
+let menuPromise = null;
+
+function fetchMenu() {
+  if (menuPromise) return menuPromise;
+  menuPromise = fetch("/api/meals/external-menu")
+    .then((r) => { if (!r.ok) throw new Error("Failed to load"); return r.json(); })
+    .then((d) => { menuCache = d.items || []; return menuCache; })
+    .catch((e) => { console.error(e); menuPromise = null; throw e; });
+  return menuPromise;
+}
 
 export default function Menu({ mode = "home" }) {
   const [allItems, setAllItems] = useState(menuCache || []);
@@ -144,27 +154,12 @@ export default function Menu({ mode = "home" }) {
   const [visibleCount, setVisibleCount] = useState(12);
 
   useEffect(() => {
-    setLoading(!menuCache);
-    setError(null);
+    if (menuCache) { setLoading(false); return; }
     let cancelled = false;
-    const run = async () => {
-      try {
-        const res = await fetch("/api/meals/external-menu");
-        if (!res.ok) throw new Error("Failed to load");
-        const data = await res.json();
-        const items = data.items || [];
-        if (!cancelled) {
-          menuCache = items;
-          setAllItems(items);
-        }
-      } catch (e) {
-        console.error(e);
-        if (!cancelled && !menuCache) setError("Failed to load menu. Please try again.");
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    };
-    run();
+    fetchMenu()
+      .then((items) => { if (!cancelled) setAllItems(items); })
+      .catch(() => { if (!cancelled) setError("Failed to load menu. Please try again."); })
+      .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, []);
 
