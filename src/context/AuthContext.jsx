@@ -10,7 +10,10 @@ function resetScroll() {
 }
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const t = sessionStorage.getItem('ae-user-token');
+    return t ? { _pending: true } : null;
+  });
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(() => {
     return !!sessionStorage.getItem('ae-admin-token');
   });
