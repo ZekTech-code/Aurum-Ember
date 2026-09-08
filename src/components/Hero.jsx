@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 import { ArrowRight, Utensils } from "lucide-react";
 
 const backgrounds = [
-  "linear-gradient(135deg, #1a1a1a 0%, #0f0e0c 50%, #1a1510 100%)",
-  "linear-gradient(135deg, #1a1510 0%, #0f0e0c 50%, #1a1a1a 100%)",
-  "linear-gradient(135deg, #0f0e0c 0%, #1a1a1a 50%, #1a1510 100%)",
-  "linear-gradient(135deg, #1a1a1a 0%, #1a1510 50%, #0f0e0c 100%)",
-  "linear-gradient(135deg, #1a1510 0%, #1a1a1a 50%, #0f0e0c 100%)",
-  "linear-gradient(135deg, #0f0e0c 0%, #1a1510 50%, #1a1a1a 100%)",
+  "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?w=1200&q=80",
+  "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?w=1200&q=80",
+  "https://images.pexels.com/photos/262897/pexels-photo-262897.jpeg?w=1200&q=80",
+  "https://images.pexels.com/photos/2092897/pexels-photo-2092897.jpeg?w=1200&q=80",
+  "https://images.pexels.com/photos/1395967/pexels-photo-1395967.jpeg?w=1200&q=80",
+  "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?w=1200&q=80",
 ];
 
 export default function HomePage() {
@@ -25,7 +25,7 @@ export default function HomePage() {
   return (
     <section
       className="relative w-full min-h-150 lg:min-h-170 xl:min-h-185 overflow-hidden rounded-lg mx-auto pt-23 md:pt-24 lg:pt-25"
-      style={{ marginTop: 'calc(-1 * (var(--navbar-height, 76px) + 24px))' }}
+      style={{ marginTop: 'calc(-1 * (var(--navbar-height, 76px) + 24px))', backgroundColor: '#0f0e0c' }}
     >
       <div className="relative w-full h-full min-h-[inherit] overflow-hidden rounded-lg">
         {/* Background Layers */}
@@ -35,14 +35,12 @@ export default function HomePage() {
             className="absolute inset-0 transition-opacity duration-1500 ease-in-out pointer-events-none"
             style={{ opacity: i === activeBg ? 1 : 0 }}
           >
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage: `url(${bg})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-              }}
+            <img
+              src={bg}
+              alt=""
+              loading={i === 0 ? "eager" : "lazy"}
+              fetchPriority={i === 0 ? "high" : "auto"}
+              className="absolute inset-0 w-full h-full object-cover"
             />
           </div>
         ))}
