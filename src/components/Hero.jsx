@@ -24,8 +24,8 @@ export default function HomePage() {
 
   return (
     <section
-      className="relative w-full min-h-150 lg:min-h-170 xl:min-h-185 overflow-hidden rounded-lg mx-auto pt-23 md:pt-24 lg:pt-25"
-      style={{ marginTop: 'calc(-1 * (var(--navbar-height, 76px) + 24px))', backgroundColor: '#0f0e0c' }}
+      className="relative w-full min-h-150 lg:min-h-170 xl:min-h-185 overflow-hidden rounded-lg mx-auto"
+      style={{ marginTop: 'calc(-1 * var(--navbar-height, 76px))', backgroundColor: '#0f0e0c' }}
     >
       <div className="relative w-full h-full min-h-[inherit] overflow-hidden rounded-lg">
         {/* Background Layers */}
