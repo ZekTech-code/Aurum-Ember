@@ -250,7 +250,7 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#0F0E0C] text-[#F5F0E8] relative overflow-x-hidden font-sans selection:bg-[#c5a059]/30 transition-colors duration-400 dark">
+    <div className="min-h-screen w-full bg-[#0F0E0C] text-[#F5F0E8] relative overflow-x-clip font-sans selection:bg-[#c5a059]/30 transition-colors duration-400 dark">
       
       {/* Background Image with Overlay */}
       <div className="fixed inset-0 z-0">
@@ -266,38 +266,42 @@ const AuthPage = () => {
       <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-[#c5a059] to-transparent opacity-50 z-50" />
 
       {/* Navbar */}
-      <nav className="relative z-50 flex items-center justify-between px-6 py-8 md:px-16 max-w-screen-2xl mx-auto">
-        <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate('/')}>
-          <div className="w-12 h-12 bg-white/5 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center shadow-2xl group-hover:border-[#c5a059]/50 transition-all duration-500">
-             <FaUtensils className="text-[#c5a059] text-xl" />
+      <nav className="sticky top-0 z-50 w-full border-b border-white/5 bg-[#0F0E0C]/80 backdrop-blur-xl">
+        <div className="mx-auto flex w-full max-w-screen-2xl items-center justify-between gap-4 px-4 py-4 sm:gap-6 sm:px-6 sm:py-5 md:px-16 md:py-6">
+          <div className="group flex min-w-0 items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 shadow-2xl backdrop-blur-md transition-all duration-500 group-hover:border-[#c5a059]/50 sm:h-12 sm:w-12">
+               <FaUtensils className="text-lg text-[#c5a059] sm:text-xl" />
+            </div>
+            <div className="flex min-w-0 flex-col">
+              <span className="truncate text-base font-bold uppercase leading-none tracking-[0.08em] sm:text-xl sm:tracking-[0.18em] md:text-2xl md:tracking-widest lg:text-xl xl:text-2xl">Aurum <span className="text-[#c5a059] font-serif italic lowercase">&amp;</span> Ember</span>
+              <span className="mt-1 truncate text-[8px] tracking-[0.2em] text-neutral-500 uppercase font-medium sm:text-[10px] sm:tracking-[0.4em]">Fine Dining Est. 2026</span>
+            </div>
           </div>
-          <div className="flex flex-col">
-            <span className="text-2xl font-bold tracking-widest uppercase leading-none">Aurum <span className="text-[#c5a059] font-serif italic lowercase">&amp;</span> Ember</span>
-            <span className="text-[10px] tracking-[0.4em] text-neutral-500 uppercase font-medium">Fine Dining Est. 2026</span>
+
+          <div className="hidden lg:flex items-center space-x-8 xl:space-x-12 text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-400">
+            <Link to="/" className="hover:text-[#c5a059] transition-colors">Home</Link>
+            <Link to="/menu" className="hover:text-[#c5a059] transition-colors">The Menu</Link>
+            <a href="#experiences" className="hover:text-[#c5a059] transition-colors">Experiences</a>
+            <Link to="/reserve" className="hover:text-[#c5a059] transition-colors">Reservations</Link>
           </div>
-        </div>
 
-        <div className="hidden lg:flex items-center space-x-12 text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-400">
-          <Link to="/" className="hover:text-[#c5a059] transition-colors">Home</Link>
-          <Link to="/menu" className="hover:text-[#c5a059] transition-colors">The Menu</Link>
-          <a href="#experiences" className="hover:text-[#c5a059] transition-colors">Experiences</a>
-          <Link to="/reserve" className="hover:text-[#c5a059] transition-colors">Reservations</Link>
-        </div>
-
-        <div className="flex items-center gap-6">
-          <button 
-            onClick={() => setIsLogin(!isLogin)}
-            className="hidden sm:flex items-center gap-2 px-8 py-3 bg-white/5 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-500"
-          >
-            {isLogin ? 'Register' : 'Sign In'}
-          </button>
-          <button 
-            onClick={() => setIsMobileMenuOpen(true)}
-            className="lg:hidden p-2 text-2xl hover:text-[#c5a059] transition-colors"
-            aria-label="Open menu"
-          >
-            <FaBars />
-          </button>
+          <div className="flex shrink-0 items-center gap-3 sm:gap-6">
+            <button
+              onClick={() => setIsLogin(!isLogin)}
+              className="hidden sm:flex items-center gap-2 px-8 py-3 bg-white/5 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-500"
+            >
+              {isLogin ? 'Register' : 'Sign In'}
+            </button>
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="auth-mobile-menu"
+              className="lg:hidden shrink-0 rounded-full p-2 text-2xl leading-none transition-colors hover:text-[#c5a059] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c5a059]"
+              aria-label="Open menu"
+            >
+              <FaBars />
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -309,6 +313,10 @@ const AuthPage = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            id="auth-mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation"
             className="fixed inset-0 z-100 bg-[#0a0a0a] flex flex-col p-8"
           >
             <div className="flex items-center justify-between mb-20">

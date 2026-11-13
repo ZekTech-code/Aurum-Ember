@@ -302,7 +302,8 @@ body {
   white-space: nowrap;
 }
 
-.nav-link::after {
+/* Gold hover underline — desktop nav links only (1025px and up) */
+.navbar-links .nav-link::after {
   content: '';
   position: absolute;
   bottom: 6px;
@@ -319,8 +320,8 @@ body {
   color: var(--brand-gold);
 }
 
-.nav-link:hover::after,
-.nav-link.active::after {
+.navbar-links .nav-link:hover::after,
+.navbar-links .nav-link.active::after {
   transform: scaleX(1);
   transform-origin: left;
 }
@@ -568,7 +569,7 @@ body {
   padding: 1.25rem 2rem 1.75rem;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.5rem;
   box-shadow: 0 16px 48px rgba(0,0,0,0.1);
   transform: translateY(-10px);
   opacity: 0;
@@ -583,10 +584,72 @@ body {
   pointer-events: all;
 }
 
+/* Mobile drawer nav links — card rows, no gold hover underline */
 .mobile-menu .nav-link {
-  padding: 0.75rem 1rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.85rem 1.1rem 0.85rem 1.25rem;
   font-size: 0.95rem;
-  border-radius: 10px;
+  font-weight: 500;
+  border-radius: 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: color var(--transition-base), background var(--transition-base),
+              border-color var(--transition-base), box-shadow var(--transition-base),
+              transform var(--transition-base);
+}
+
+/* Kill the desktop gold underline inside the drawer (defensive) */
+.mobile-menu .nav-link::after {
+  content: none;
+  display: none;
+}
+
+/* Gold accent bar on the left of each row */
+.mobile-menu .nav-link::before {
+  content: '';
+  position: absolute;
+  left: 0.45rem;
+  top: 50%;
+  width: 3px;
+  height: 55%;
+  border-radius: 99px;
+  background: var(--brand-gold);
+  transform: translateY(-50%) scaleY(0);
+  transform-origin: center;
+  transition: transform var(--transition-base);
+}
+
+.mobile-menu .nav-link:hover,
+.mobile-menu .nav-link:focus-visible {
+  color: var(--brand-gold);
+  background: var(--bg-card);
+  border-color: rgba(234, 179, 8, 0.45);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(234, 179, 8, 0.08);
+  outline: none;
+}
+
+.mobile-menu .nav-link:active {
+  transform: scale(0.985);
+}
+
+.mobile-menu .nav-link.active {
+  color: var(--brand-gold);
+  font-weight: 600;
+  background: rgba(234, 179, 8, 0.08);
+  border-color: rgba(234, 179, 8, 0.35);
+  box-shadow: 0 4px 14px rgba(201, 146, 42, 0.18);
+}
+
+.mobile-menu .nav-link.active::before {
+  transform: translateY(-50%) scaleY(1);
+}
+
+.mobile-menu .nav-link.active:hover {
+  background: rgba(234, 179, 8, 0.12);
 }
 
 .mobile-menu .btn-reserve {
@@ -624,7 +687,12 @@ body {
 .mobile-divider {
   height: 1px;
   background: var(--border);
-  margin: 0.5rem 0;
+  margin: 0.6rem 0;
+}
+
+/* Reserve button inside the drawer matches the link cards */
+.mobile-menu .btn-reserve {
+  box-shadow: 0 4px 16px rgba(201, 146, 42, 0.3);
 }
 
 /* PAGE BODY */
@@ -1878,9 +1946,9 @@ body {
   }
 
   .mobile-menu .nav-link {
-    padding: 0.75rem 0.85rem;
+    padding: 0.75rem 0.9rem 0.75rem 1.15rem;
     font-size: 0.92rem;
-    min-height: 44px;
+    min-height: 48px;
   }
 
   .mobile-menu .btn-reserve {
@@ -1940,14 +2008,14 @@ body {
     top: 56px;
     max-height: calc(100vh - 56px);
     padding: 0.85rem 1rem 1.5rem;
-    gap: 0.15rem;
+    gap: 0.4rem;
   }
 
   .mobile-menu .nav-link {
-    padding: 0.7rem 0.75rem;
+    padding: 0.7rem 0.8rem 0.7rem 1.05rem;
     font-size: 0.9rem;
-    min-height: 44px;
-    border-radius: 8px;
+    min-height: 46px;
+    border-radius: 10px;
   }
 
   .mobile-menu .btn-reserve {
